@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZeroFiascko</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <main class="home">
+        <section class="hero">
+            <span class="hero-tagline">Local project management</span>
+            <h1>ZeroFiascko</h1>
+            <p class="hero-description">A simple, local and dependency-free project dashboard.</p>
+        </section>
+        <section class="project-actions">
+            <article class="action-card">
+                <h2>New Project</h2>
+                <p>Create a new project and start organizing your work.</p>
+                <button id="newProjectButton" class="btn btn-primary" type="button">Create Project</button>
+            </article>
+            <article class="action-card">
+                <h2>Open Project</h2>
+                <p>Open an existing ZeroFiascko project from a JSON file.</p>
+                <button id="openProjectButton" class="btn btn-secondary" type="button">Open JSON</button>
+                <input id="projectFileInput" type="file" accept=".json,application/json" hidden>
+            </article>
+        </section>
+        <p id="errorMessage" class="error-message" hidden></p>
+    </main>
+    <footer class="site-footer">
+        <p>
+            © <span id="currentYear"></span> Fiascko.
+            All rights reserved.
+        </p>
+    </footer>
+    <button id="backToTop" class="back-to-top" type="button" aria-label="Back to top">↑</button>
+    <dialog id="newProjectDialog" class="dialog">
+        <form id="newProjectForm" class="dialog-content">
+            <h2>New Project</h2>
+            <label for="projectTitle">Project title</label>
+            <input id="projectTitle" name="projectTitle" type="text" maxlength="100" autocomplete="off" required>
+            <div class="dialog-actions">
+                <button id="cancelProjectButton" class="btn btn-secondary" type="button">Cancel</button>
+                <button class="btn btn-primary" type="submit">Create</button>
+            </div>
+        </form>
+    </dialog>
+    <script src="js/core/constants.js"></script>
+    <script src="js/core/validations.js"></script>
+    <script src="js/core/utils.js"></script>
+    <script src="js/core/project.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>

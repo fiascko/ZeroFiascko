@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ZeroFiascko</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <main class="dashboard-page">
+        <header class="dashboard-header">
+            <div>
+                <span class="dashboard-tagline">ZeroFiascko</span>
+                <h1 id="projectTitle"></h1>
+            </div>
+            <div class="dashboard-actions">
+                <button id="closeButton" class="btn btn-secondary" type="button">Close</button>
+                <button id="saveProjectButton" class="btn btn-primary" type="button">Save Project</button>
+            </div>
+        </header>
+        <section id="dashboard" class="dashboard">
+            <details class="dashboard-section">
+                <summary class="dashboard-section-header">
+                    <span>Project Info</span>
+                </summary>
+                <div class="dashboard-section-content">
+                    <div id="projectInfo" class="project-info">
+                        <div class="project-info-main">
+                            <div class="project-info-item">
+                                <span class="project-info-label">Project Name</span>
+                                <strong id="projectInfoTitleDisplay" class="project-info-value"></strong>
+                            </div>
+                            <div class="project-info-item">
+                                <span class="project-info-label">Description</span>
+                                <p id="projectInfoDescriptionDisplay" class="project-info-description"></p>
+                            </div>
+                        </div>
+                        <div class="project-info-dates">
+                            <div class="project-info-date">
+                                <span>Created</span>
+                                <strong id="projectCreatedAt"></strong>
+                            </div>
+                            <div class="project-info-date">
+                                <span>Last Updated</span>
+                                <strong id="projectUpdatedAt"></strong>
+                            </div>
+                        </div>
+                        <div class="project-info-actions">
+                            <button id="editProjectInfoButton" class="btn btn-primary" type="button">Edit Project Info</button>
+                        </div>
+                    </div>
+                </div>
+            </details>
+            <details class="dashboard-section">
+                <summary class="dashboard-section-header">
+                    <span>Board</span>
+                </summary>
+                <div class="dashboard-section-content">
+                    <div id="board" class="board"></div>
+                </div>
+            </details>
+            <details class="dashboard-section">
+                <summary class="dashboard-section-header">
+                    <span>Statistics</span>
+                </summary>
+                <div class="dashboard-section-content">
+                    <div id="statistics" class="statistics"></div>
+                </div>
+            </details>
+            <details class="dashboard-section">
+                <summary class="dashboard-section-header">
+                    <span>Notes</span>
+                </summary>
+                <div class="dashboard-section-content">
+                    <div id="notes" class="notes">
+                        <div class="notes-content">
+                            <p id="notesDisplay" class="notes-text"></p>
+                        </div>
+                        <div class="notes-actions">
+                            <button id="editNotesButton" class="btn btn-primary" type="button">Edit Notes</button>
+                        </div>
+                    </div>
+                </div>
+            </details>
+            <details class="dashboard-section">
+                <summary class="dashboard-section-header">
+                    <span>Archive</span>
+                </summary>
+                <div class="dashboard-section-content">
+                    <div id="archive" class="archive"></div>
+                </div>
+            </details>
+        </section>
+    </main>
+    <footer class="site-footer">
+        <p>
+            © <span id="currentYear"></span> Fiascko.
+            All rights reserved.
+        </p>
+    </footer>
+    <button id="backToTop" class="back-to-top" type="button" aria-label="Back to top">↑</button>
+    <dialog id="projectInfoDialog" class="dialog">
+        <form id="projectInfoForm" class="dialog-content">
+            <h2>Edit Project Info</h2>
+            <label for="projectInfoTitle">Project Name</label>
+            <input id="projectInfoTitle" type="text" maxlength="255" required>
+            <label for="projectInfoDescription">Description</label>
+            <textarea id="projectInfoDescription" maxlength="5000"></textarea>
+            <div class="dialog-actions">
+                <button id="cancelProjectInfoButton" class="btn btn-secondary" type="button">Cancel</button>
+                <button class="btn btn-primary" type="submit">Save</button>
+            </div>
+        </form>
+    </dialog>
+    <dialog id="notesDialog" class="dialog">
+        <form id="notesForm" class="dialog-content">
+            <h2>Edit Notes</h2>
+            <label for="notesTextarea">Notes</label>
+            <textarea id="notesTextarea" maxlength="10000"></textarea>
+            <div class="dialog-actions">
+                <button id="cancelNotesButton" class="btn btn-secondary" type="button">Cancel</button>
+                <button class="btn btn-primary" type="submit">Save</button>
+            </div>
+        </form>
+    </dialog>
+    <dialog id="cardDialog" class="dialog">
+        <form id="cardForm" class="dialog-content">
+            <h2 id="cardDialogTitle">New Card</h2>
+            <label for="cardTitle">Title</label>
+            <input id="cardTitle" type="text" maxlength="255" required>
+            <label for="cardDescription">Description</label>
+            <textarea id="cardDescription" rows="6" maxlength="5000"></textarea>
+            <div class="dialog-actions">
+                <button id="deleteCardButton" class="btn btn-danger" type="button" hidden>Delete</button>
+                <button id="archiveCardButton" class="btn btn-secondary" type="button" hidden>Archive</button>
+                <button id="cancelCardButton" class="btn btn-secondary" type="button">Cancel</button>
+                <button class="btn btn-primary" type="submit">Save</button>
+            </div>
+        </form>
+    </dialog>
+    <script src="js/core/constants.js"></script>
+    <script src="js/core/validations.js"></script>
+    <script src="js/core/utils.js"></script>
+    <script src="js/core/project.js"></script>
+    <script src="js/features/statistics.js"></script>
+    <script src="js/features/project-info.js"></script>
+    <script src="js/features/notes.js"></script>
+    <script src="js/features/archive.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
