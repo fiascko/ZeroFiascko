@@ -91,12 +91,25 @@ ZeroFiascko/
 │
 ├── js/
 │   ├── core/
+│   │   ├── constants.js
+│   │   ├── project.js
+│   │   ├── utils.js
+│   │   └── validations.js
+│   │
 │   ├── features/
+│   │   ├── archive.js
+│   │   ├── notes.js
+│   │   ├── project-info.js
+│   │   └── statistics.js
+│   │
 │   ├── dashboard.js
-│   ├── footer.js
 │   └── index.js
 │
 ├── saves/
+│   └── .gitkeep
+│
+├── .gitattributes
+├── .gitignore
 ├── dashboard.html
 ├── index.html
 ├── LICENSE
