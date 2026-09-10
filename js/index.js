@@ -52,7 +52,6 @@ function createNewProject(event) {
 
     const project = createProject(title);
     saveProjectToLocalStorage(project);
-    downloadProjectFile(project);
     openDashboard();
 }
 
