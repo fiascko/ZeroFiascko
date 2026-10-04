@@ -34,6 +34,7 @@ ZeroFiascko does not require sending your project data to a remote server or thi
 
 - Kanban-style project board
 - Backlog, Analyse, In Progress, QA and Done lanes
+- Story and Bug card types
 - Create, edit, move and delete cards
 - Archive and unarchive cards
 - Project information and description

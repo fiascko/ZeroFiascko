@@ -33,4 +33,11 @@ const LANES = [
     }
 ];
 
+const CARD_TYPES = {
+    STORY: "STORY",
+    BUG: "BUG"
+};
+
+const VALID_CARD_TYPES = Object.values(CARD_TYPES);
+
 const VALID_LANE_IDS = Object.values(LANE_IDS);

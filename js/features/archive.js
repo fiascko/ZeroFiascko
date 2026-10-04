@@ -38,6 +38,10 @@ function createArchivedCardElement(card, project) {
     const cardElement = document.createElement("article");
     cardElement.className = "archive-card";
 
+    if (card.type === CARD_TYPES.BUG) {
+        cardElement.classList.add("archive-card-bug");
+    }
+
     const title = document.createElement("h3");
     title.textContent = card.title;
 

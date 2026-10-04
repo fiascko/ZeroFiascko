@@ -3,19 +3,35 @@ const statistics = document.getElementById("statistics");
 function renderStatistics(project) {
     statistics.replaceChildren();
     const activeCards = getActiveCards(project);
+    const allCards = project.cards;
     const archivedCardsCount = getArchivedCardsCount(project);
     const completedCards = getCompletedCardsCount(activeCards);
-    const totalCards = activeCards.length;
-    const remainingCards = totalCards - completedCards;
+    const storyCardsCount = getCardsCountByType(
+        allCards,
+        CARD_TYPES.STORY
+    );
+    const bugCardsCount = getCardsCountByType(
+        allCards,
+        CARD_TYPES.BUG
+    );
+
+    const totalCards = allCards.length;
+
+    const remainingCards = activeCards.filter(
+        (card) => card.lane !== LANE_IDS.DONE
+    ).length;
+
     const completionPercentage = getCompletionPercentage(
         completedCards,
-        totalCards
+        activeCards.length
     );
 
     const summary = createStatisticsSummary(
         totalCards,
         completedCards,
         remainingCards,
+        storyCardsCount,
+        bugCardsCount,
         archivedCardsCount,
         completionPercentage
     );
@@ -46,9 +62,15 @@ function getArchivedCardsCount(project) {
     ).length;
 }
 
-function getCompletedCardsCount(activeCards) {
-    return activeCards.filter(
+function getCompletedCardsCount(cards) {
+    return cards.filter(
         (card) => card.lane === LANE_IDS.DONE
+    ).length;
+}
+
+function getCardsCountByType(cards, type) {
+    return cards.filter(
+        (card) => card.type === type
     ).length;
 }
 
@@ -66,6 +88,8 @@ function createStatisticsSummary(
     totalCards,
     completedCards,
     remainingCards,
+    storyCardsCount,
+    bugCardsCount,
     archivedCardsCount,
     completionPercentage
 ) {
@@ -77,11 +101,19 @@ function createStatisticsSummary(
     );
 
     summary.appendChild(
-        createStatisticCard("Completed", completedCards)
+        createStatisticCard("Stories", storyCardsCount)
+    );
+
+    summary.appendChild(
+        createStatisticCard("Bugs", bugCardsCount)
     );
 
     summary.appendChild(
         createStatisticCard("Remaining", remainingCards)
+    );
+
+    summary.appendChild(
+        createStatisticCard("Completed", completedCards)
     );
 
     summary.appendChild(

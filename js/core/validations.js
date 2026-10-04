@@ -80,6 +80,8 @@ function isValidCard(card) {
         typeof card.description === "string" &&
         typeof card.lane === "string" &&
         VALID_LANE_IDS.includes(card.lane) &&
+        typeof card.type === "string" &&
+        VALID_CARD_TYPES.includes(card.type) &&
         typeof card.archived === "boolean"
     );
 }

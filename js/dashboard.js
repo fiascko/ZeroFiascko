@@ -6,6 +6,7 @@ const cardDialog = document.getElementById("cardDialog");
 const cardForm = document.getElementById("cardForm");
 const cardDialogTitle = document.getElementById("cardDialogTitle");
 const cardTitleInput = document.getElementById("cardTitle");
+const cardTypeInput = document.getElementById("cardType");
 const cardDescriptionInput = document.getElementById("cardDescription");
 const cancelCardButton = document.getElementById("cancelCardButton");
 const deleteCardButton = document.getElementById("deleteCardButton");
@@ -146,6 +147,10 @@ function createCardElement(card) {
     cardElement.className = "board-card";
     cardElement.id = card.id;
 
+    if (card.type === CARD_TYPES.BUG) {
+        cardElement.classList.add("board-card-bug");
+    }
+
     const title = createCardTitle(card);
     const actions = createCardActions(card);
 
@@ -226,9 +231,13 @@ function openNewCardDialog(laneId) {
     selectedLaneId = laneId;
     cardDialogTitle.textContent = "New Card";
     cardTitleInput.value = "";
+    cardTypeInput.value = CARD_TYPES.STORY;
     cardDescriptionInput.value = "";
     deleteCardButton.hidden = true;
     archiveCardButton.hidden = true;
+
+    cardDialog.classList.remove("dialog-bug");
+
     cardDialog.showModal();
     cardTitleInput.focus();
 }
@@ -238,9 +247,13 @@ function openCardDialog(card) {
     selectedLaneId = null;
     cardDialogTitle.textContent = "Card";
     cardTitleInput.value = card.title;
+    cardTypeInput.value = card.type;
     cardDescriptionInput.value = card.description;
     deleteCardButton.hidden = false;
     archiveCardButton.hidden = false;
+
+    cardDialog.classList.toggle("dialog-bug", card.type === CARD_TYPES.BUG);
+
     cardDialog.showModal();
     cardTitleInput.focus();
 }
@@ -253,6 +266,7 @@ function saveCard(event) {
     event.preventDefault();
 
     const title = cardTitleInput.value.trim();
+    const type = cardTypeInput.value;
     const description = cardDescriptionInput.value.trim();
 
     if (!title) {
@@ -260,16 +274,10 @@ function saveCard(event) {
     }
 
     if (selectedCard) {
-        updateSelectedCard(
-            title,
-            description
-        );
+        updateSelectedCard(title, description, type);
     }
     else {
-        createCard(
-            title,
-            description
-        );
+        createCard(title, description, type);
     }
 
     saveProject();
@@ -277,17 +285,19 @@ function saveCard(event) {
     renderDashboard();
 }
 
-function updateSelectedCard(title, description) {
+function updateSelectedCard(title, description, type) {
     selectedCard.title = title;
+    selectedCard.type = type;
     selectedCard.description = description;
 }
 
-function createCard(title, description) {
+function createCard(title, description, type) {
     const card = {
         id: generateCardId(),
         title: title,
         description: description,
         lane: selectedLaneId,
+        type: type,
         archived: false
     };
 

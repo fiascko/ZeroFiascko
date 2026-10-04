@@ -10,6 +10,11 @@
     --color-accent-soft: #2F2119;
     --color-black: #0A0704;
     --color-white: #FFFFFF;
+    --color-bug-bg: #2A1717;
+    --color-bug-border: #7A3E3E;
+    --color-bug-hover: #B85C5C;
+    --color-bug-shadow: #B85C5C33;
+    --color-bug-text-muted: #C98A8A;
     --max-width: 900px;
     --dashboard-min-width: 1400px;
     --border-radius: 12px;
@@ -191,16 +196,19 @@ input {
     font-weight: 600;
 }
 
-.dialog-content input {
+.dialog-content input,
+.dialog-content select {
     width: 100%;
     padding: 10px 12px;
     background: var(--color-bg-soft);
     border: 1px solid var(--color-border);
     border-radius: 8px;
     color: var(--color-text);
+    font: inherit;
 }
 
-.dialog-content input:focus {
+.dialog-content input:focus,
+.dialog-content select:focus {
     outline: none;
     border-color: var(--color-accent);
     box-shadow: 0 0 0 2px var(--color-accent-soft);
@@ -521,7 +529,7 @@ input {
 
 .statistics-summary {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(7, minmax(0, 1fr));
     gap: 16px;
 }
 
@@ -853,4 +861,136 @@ input {
     border-radius: var(--border-radius);
     color: var(--color-text-muted);
     text-align: center;
+}
+
+.board-card-bug {
+    background: var(--color-bug-bg);
+    border-color: var(--color-bug-border);
+}
+
+.board-card-bug:hover {
+    background: var(--color-bug-bg);
+    border-color: var(--color-bug-hover);
+    box-shadow: 0 0 16px var(--color-bug-shadow);
+}
+
+.board-card-bug h3 {
+    color: var(--color-white);
+}
+
+.board-card-bug h3:hover {
+    color: var(--color-bug-hover);
+}
+
+.board-card-bug .card-move-button {
+    border-color: var(--color-bug-border);
+    color: var(--color-bug-text-muted);
+}
+
+.board-card-bug .card-move-button:hover {
+    background: var(--color-bug-bg);
+    border-color: var(--color-bug-hover);
+    color: var(--color-bug-hover);
+}
+
+.dialog-bug {
+    border-color: var(--color-bug-border);
+}
+
+.dialog-bug .dialog-content {
+    background: var(--color-bug-bg);
+}
+
+.dialog-bug .dialog-content h2 {
+    color: var(--color-white);
+}
+
+.dialog-bug .dialog-content label {
+    color: var(--color-bug-hover);
+}
+
+.dialog-bug input,
+.dialog-bug select,
+.dialog-bug textarea {
+    border-color: var(--color-bug-border);
+}
+
+.dialog-bug input:focus,
+.dialog-bug select:focus,
+.dialog-bug textarea:focus {
+    border-color: var(--color-bug-hover);
+    box-shadow: 0 0 0 2px var(--color-bug-shadow);
+}
+
+.dialog-bug .btn-primary {
+    background: var(--color-bug-hover);
+    color: var(--color-black);
+}
+
+.dialog-bug .btn-primary:hover {
+    background: var(--color-bug-text-muted);
+    color: var(--color-black);
+}
+
+.dialog-bug .btn-secondary {
+    border-color: var(--color-bug-border);
+}
+
+.dialog-bug .btn-secondary:hover {
+    background: var(--color-bug-bg);
+    border-color: var(--color-bug-hover);
+    color: var(--color-white);
+}
+
+.dialog-bug .btn-danger {
+    border-color: var(--color-bug-border);
+    color: var(--color-bug-text-muted);
+}
+
+.dialog-bug .btn-danger:hover {
+    background: var(--color-bug-bg);
+    border-color: var(--color-bug-hover);
+    color: var(--color-white);
+}
+
+.archive-card-bug {
+    background: var(--color-bug-bg);
+    border-color: var(--color-bug-border);
+}
+
+.archive-card-bug:hover {
+    background: var(--color-bug-bg);
+    border-color: var(--color-bug-hover);
+    box-shadow: 0 0 16px var(--color-bug-shadow);
+}
+
+.archive-card-bug h3 {
+    color: var(--color-white);
+}
+
+.archive-card-bug .archive-card-lane {
+    color: var(--color-bug-text-muted);
+}
+
+.archive-card-bug .btn-secondary {
+    background: var(--color-bug-bg);
+    border-color: var(--color-bug-border);
+    color: var(--color-white);
+}
+
+.archive-card-bug .btn-secondary:hover {
+    background: var(--color-bug-hover);
+    border-color: var(--color-bug-text-muted);
+    color: var(--color-white);
+}
+
+.archive-card-bug .btn-danger {
+    border-color: var(--color-bug-border);
+    color: var(--color-bug-text-muted);
+}
+
+.archive-card-bug .btn-danger:hover {
+    background: var(--color-bug-bg);
+    border-color: var(--color-bug-hover);
+    color: var(--color-white);
 }
