@@ -15,6 +15,10 @@ function createProject(title) {
             id: lane.id,
             name: lane.name
         })),
+        tags: DEFAULT_TAG_NAMES.map((name, index) => ({
+            id: `Tag${index + 1}`,
+            name: name
+        })),
         cards: []
     };
 }

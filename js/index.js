@@ -5,7 +5,6 @@ const newProjectDialog = document.getElementById("newProjectDialog");
 const newProjectForm = document.getElementById("newProjectForm");
 const projectTitleInput = document.getElementById("projectTitle");
 const cancelProjectButton = document.getElementById("cancelProjectButton");
-const errorMessage = document.getElementById("errorMessage");
 
 function initializeIndex() {
     newProjectButton.addEventListener(
@@ -31,7 +30,6 @@ function initializeIndex() {
 }
 
 function openNewProjectDialog() {
-    hideError();
     projectTitleInput.value = "";
     newProjectDialog.showModal();
     projectTitleInput.focus();
@@ -56,7 +54,6 @@ function createNewProject(event) {
 }
 
 function openProjectFilePicker() {
-    hideError();
     projectFileInput.click();
 }
 
@@ -73,7 +70,8 @@ async function openExistingProject() {
         openDashboard();
     }
     catch {
-        showError(
+        showAlert(
+            "Invalid Project",
             "This file is not a valid ZeroFiascko project."
         );
     }
@@ -84,16 +82,6 @@ async function openExistingProject() {
 
 function openDashboard() {
     window.location.href = "./dashboard.html";
-}
-
-function showError(message) {
-    errorMessage.textContent = message;
-    errorMessage.hidden = false;
-}
-
-function hideError() {
-    errorMessage.textContent = "";
-    errorMessage.hidden = true;
 }
 
 initializeIndex();

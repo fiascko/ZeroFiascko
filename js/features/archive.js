@@ -45,12 +45,20 @@ function createArchivedCardElement(card, project) {
     const title = document.createElement("h3");
     title.textContent = card.title;
 
+    const tags = createCardTags(card);
+
     const lane = document.createElement("span");
     lane.className = "archive-card-lane";
     lane.textContent = getLaneName(project, card.lane);
 
     const actions = createArchiveCardActions(card);
+
     cardElement.appendChild(title);
+
+    if (tags) {
+        cardElement.appendChild(tags);
+    }
+
     cardElement.appendChild(lane);
     cardElement.appendChild(actions);
 

@@ -37,6 +37,8 @@ ZeroFiascko does not require sending your project data to a remote server or thi
 - Story and Bug card types
 - Create, edit, move and delete cards
 - Archive and unarchive cards
+- Create, rename and delete project tags
+- Assign multiple tags to cards
 - Project information and description
 - Project notes
 - Project statistics and completion tracking
@@ -93,6 +95,7 @@ ZeroFiascko/
 ├── js/
 │   ├── core/
 │   │   ├── constants.js
+│   │   ├── dialogs.js
 │   │   ├── project.js
 │   │   ├── utils.js
 │   │   └── validations.js
@@ -101,7 +104,8 @@ ZeroFiascko/
 │   │   ├── archive.js
 │   │   ├── notes.js
 │   │   ├── project-info.js
-│   │   └── statistics.js
+│   │   ├── statistics.js
+│   │   └── tags.js
 │   │
 │   ├── dashboard.js
 │   └── index.js

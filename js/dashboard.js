@@ -8,6 +8,8 @@ const cardDialogTitle = document.getElementById("cardDialogTitle");
 const cardTitleInput = document.getElementById("cardTitle");
 const cardTypeInput = document.getElementById("cardType");
 const cardDescriptionInput = document.getElementById("cardDescription");
+const cardTagsSection = document.getElementById("cardTagsSection");
+const cardTagsList = document.getElementById("cardTagsList");
 const cancelCardButton = document.getElementById("cancelCardButton");
 const deleteCardButton = document.getElementById("deleteCardButton");
 const archiveCardButton = document.getElementById("archiveCardButton");
@@ -27,30 +29,13 @@ function initializeDashboard() {
 }
 
 function initializeDashboardEvents() {
-    cardForm.addEventListener(
-        "submit",
-        saveCard
-    );
-    cancelCardButton.addEventListener(
-        "click",
-        closeCardDialog
-    );
-    deleteCardButton.addEventListener(
-        "click",
-        deleteSelectedCard
-    );
-    archiveCardButton.addEventListener(
-        "click",
-        archiveSelectedCard
-    );
-    saveProjectButton.addEventListener(
-        "click",
-        downloadCurrentProject
-    );
-    closeButton.addEventListener(
-        "click",
-        closeDashboard
-    );
+    cardForm.addEventListener("submit", saveCard);
+    cancelCardButton.addEventListener("click", closeCardDialog);
+    deleteCardButton.addEventListener("click", deleteSelectedCard);
+    archiveCardButton.addEventListener("click", archiveSelectedCard);
+    saveProjectButton.addEventListener("click", downloadCurrentProject);
+    closeButton.addEventListener("click", closeDashboard);
+    cardTypeInput.addEventListener("change", updateCardDialogStyle);
 }
 
 function renderDashboard() {
@@ -65,15 +50,12 @@ function renderBoard() {
     board.replaceChildren();
 
     currentProject.lanes.forEach((lane) => {
-        board.appendChild(
-            createLaneElement(lane)
-        );
+        board.appendChild(createLaneElement(lane));
     });
 }
 
 function createLaneElement(lane) {
     const laneElement = document.createElement("section");
-
     laneElement.className = "board-lane";
     laneElement.id = lane.id;
 
@@ -91,9 +73,7 @@ function createLaneElement(lane) {
 
 function getActiveCardsByLane(laneId) {
     return currentProject.cards.filter(
-        (card) =>
-            card.lane === laneId &&
-            !card.archived
+        (card) => card.lane === laneId && !card.archived
     );
 }
 
@@ -119,9 +99,7 @@ function createCardList(cards) {
     cardList.className = "card-list";
 
     cards.forEach((card) => {
-        cardList.appendChild(
-            createCardElement(card)
-        );
+        cardList.appendChild(createCardElement(card));
     });
 
     return cardList;
@@ -129,7 +107,6 @@ function createCardList(cards) {
 
 function createAddCardButton(laneId) {
     const addCardButton = document.createElement("button");
-
     addCardButton.className = "add-card-button";
     addCardButton.type = "button";
     addCardButton.textContent = "+";
@@ -152,9 +129,15 @@ function createCardElement(card) {
     }
 
     const title = createCardTitle(card);
+    const tags = createCardTags(card);
     const actions = createCardActions(card);
 
     cardElement.appendChild(title);
+
+    if (tags) {
+        cardElement.appendChild(tags);
+    }
+
     cardElement.appendChild(actions);
 
     return cardElement;
@@ -163,6 +146,7 @@ function createCardElement(card) {
 function createCardTitle(card) {
     const title = document.createElement("h3");
     title.textContent = card.title;
+
     title.addEventListener("click", () => {
         openCardDialog(card);
     });
@@ -170,14 +154,35 @@ function createCardTitle(card) {
     return title;
 }
 
+function createCardTags(card) {
+    const tags = currentProject.tags.filter(
+        (tag) => card.tags.includes(tag.id)
+    );
+
+    if (tags.length === 0) {
+        return null;
+    }
+
+    const container = document.createElement("div");
+    container.className = "card-tags";
+
+    tags.forEach((tag) => {
+        const element = document.createElement("span");
+        element.className = "card-tag";
+        element.textContent = tag.name;
+        container.appendChild(element);
+    });
+
+    return container;
+}
+
 function createCardActions(card) {
     const actions = document.createElement("div");
     actions.className = "card-actions";
 
-    const laneIndex =
-        currentProject.lanes.findIndex(
-            (lane) => lane.id === card.lane
-        );
+    const laneIndex = currentProject.lanes.findIndex(
+        (lane) => lane.id === card.lane
+    );
 
     if (laneIndex > 0) {
         actions.appendChild(
@@ -206,13 +211,7 @@ function createCardActions(card) {
     return actions;
 }
 
-function createMoveCardButton(
-    card,
-    direction,
-    text,
-    className,
-    title
-) {
+function createMoveCardButton(card, direction, text, className, title) {
     const button = document.createElement("button");
     button.className = `card-move-button ${className}`;
     button.type = "button";
@@ -226,18 +225,54 @@ function createMoveCardButton(
     return button;
 }
 
+function renderCardTags(selectedTagIds = []) {
+    cardTagsList.replaceChildren();
+
+    cardTagsSection.hidden = currentProject.tags.length === 0;
+
+    if (cardTagsSection.hidden) {
+        return;
+    }
+
+    currentProject.tags.forEach((tag) => {
+        const label = document.createElement("label");
+        label.className = "card-tag-option";
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.value = tag.id;
+        checkbox.checked = selectedTagIds.includes(tag.id);
+
+        const name = document.createElement("span");
+        name.textContent = tag.name;
+
+        label.appendChild(checkbox);
+        label.appendChild(name);
+        cardTagsList.appendChild(label);
+    });
+}
+
+function getSelectedCardTags() {
+    return Array.from(
+        cardTagsList.querySelectorAll('input[type="checkbox"]:checked')
+    ).map((checkbox) => checkbox.value);
+}
+
 function openNewCardDialog(laneId) {
     selectedCard = null;
     selectedLaneId = laneId;
+
     cardDialogTitle.textContent = "New Card";
     cardTitleInput.value = "";
     cardTypeInput.value = CARD_TYPES.STORY;
     cardDescriptionInput.value = "";
+
+    renderCardTags();
+
     deleteCardButton.hidden = true;
     archiveCardButton.hidden = true;
 
-    cardDialog.classList.remove("dialog-bug");
-
+    updateCardDialogStyle();
     cardDialog.showModal();
     cardTitleInput.focus();
 }
@@ -245,15 +280,18 @@ function openNewCardDialog(laneId) {
 function openCardDialog(card) {
     selectedCard = card;
     selectedLaneId = null;
+
     cardDialogTitle.textContent = "Card";
     cardTitleInput.value = card.title;
     cardTypeInput.value = card.type;
     cardDescriptionInput.value = card.description;
+
+    renderCardTags(card.tags);
+
     deleteCardButton.hidden = false;
     archiveCardButton.hidden = false;
 
-    cardDialog.classList.toggle("dialog-bug", card.type === CARD_TYPES.BUG);
-
+    updateCardDialogStyle();
     cardDialog.showModal();
     cardTitleInput.focus();
 }
@@ -268,16 +306,17 @@ function saveCard(event) {
     const title = cardTitleInput.value.trim();
     const type = cardTypeInput.value;
     const description = cardDescriptionInput.value.trim();
+    const tags = getSelectedCardTags();
 
     if (!title) {
         return;
     }
 
     if (selectedCard) {
-        updateSelectedCard(title, description, type);
+        updateSelectedCard(title, description, type, tags);
     }
     else {
-        createCard(title, description, type);
+        createCard(title, description, type, tags);
     }
 
     saveProject();
@@ -285,19 +324,21 @@ function saveCard(event) {
     renderDashboard();
 }
 
-function updateSelectedCard(title, description, type) {
+function updateSelectedCard(title, description, type, tags) {
     selectedCard.title = title;
     selectedCard.type = type;
     selectedCard.description = description;
+    selectedCard.tags = tags;
 }
 
-function createCard(title, description, type) {
+function createCard(title, description, type, tags) {
     const card = {
         id: generateCardId(),
         title: title,
         description: description,
         lane: selectedLaneId,
         type: type,
+        tags: tags,
         archived: false
     };
 
@@ -309,11 +350,9 @@ function deleteSelectedCard() {
         return;
     }
 
-    currentProject.cards =
-        currentProject.cards.filter(
-            (card) =>
-                card.id !== selectedCard.id
-        );
+    currentProject.cards = currentProject.cards.filter(
+        (card) => card.id !== selectedCard.id
+    );
 
     saveProject();
     closeCardDialog();
@@ -333,22 +372,17 @@ function archiveSelectedCard() {
 }
 
 function moveCard(card, direction) {
-    const currentLaneIndex =
-        currentProject.lanes.findIndex(
-            (lane) => lane.id === card.lane
-        );
+    const currentLaneIndex = currentProject.lanes.findIndex(
+        (lane) => lane.id === card.lane
+    );
 
-    const newLaneIndex =
-        currentLaneIndex + direction;
+    const newLaneIndex = currentLaneIndex + direction;
 
     if (newLaneIndex < 0 || newLaneIndex >= currentProject.lanes.length) {
         return;
     }
 
-    card.lane =
-        currentProject.lanes[
-            newLaneIndex
-        ].id;
+    card.lane = currentProject.lanes[newLaneIndex].id;
 
     saveProject();
     renderDashboard();
@@ -356,22 +390,23 @@ function moveCard(card, direction) {
 
 function saveProject() {
     currentProject.project.updatedAt = new Date().toISOString();
-
-    saveProjectToLocalStorage(
-        currentProject
-    );
+    saveProjectToLocalStorage(currentProject);
 }
 
 function downloadCurrentProject() {
     saveProject();
-
-    downloadProjectFile(
-        currentProject
-    );
+    downloadProjectFile(currentProject);
 }
 
 function closeDashboard() {
     window.location.href = "./index.html";
+}
+
+function updateCardDialogStyle() {
+    cardDialog.classList.toggle(
+        "dialog-bug",
+        cardTypeInput.value === CARD_TYPES.BUG
+    );
 }
 
 initializeDashboard();

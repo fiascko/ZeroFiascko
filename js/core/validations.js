@@ -19,11 +19,25 @@ function isValidProject(data) {
         return false;
     }
 
+    if (!isValidTags(data.tags)) {
+        return false;
+    }
+
     if (!Array.isArray(data.cards)) {
         return false;
     }
 
     if (!data.cards.every(isValidCard)) {
+        return false;
+    }
+
+    const validTagIds = new Set(
+        data.tags.map((tag) => tag.id)
+    );
+
+    if (!data.cards.every((card) =>
+        card.tags.every((tagId) => validTagIds.has(tagId))
+    )) {
         return false;
     }
 
@@ -68,6 +82,40 @@ function isValidLanes(lanes) {
     });
 }
 
+function isValidTags(tags) {
+    if (!Array.isArray(tags)) {
+        return false;
+    }
+
+    const ids = new Set();
+    const names = new Set();
+
+    for (const tag of tags) {
+        if (
+            !tag ||
+            typeof tag !== "object" ||
+            Array.isArray(tag) ||
+            typeof tag.id !== "string" ||
+            tag.id.trim() === "" ||
+            typeof tag.name !== "string" ||
+            tag.name.trim() === ""
+        ) {
+            return false;
+        }
+
+        const normalizedName = tag.name.trim().toLowerCase();
+
+        if (ids.has(tag.id) || names.has(normalizedName)) {
+            return false;
+        }
+
+        ids.add(tag.id);
+        names.add(normalizedName);
+    }
+
+    return true;
+}
+
 function isValidCard(card) {
     return (
         card &&
@@ -82,6 +130,12 @@ function isValidCard(card) {
         VALID_LANE_IDS.includes(card.lane) &&
         typeof card.type === "string" &&
         VALID_CARD_TYPES.includes(card.type) &&
+        Array.isArray(card.tags) &&
+        card.tags.every((tagId) =>
+            typeof tagId === "string" &&
+            tagId.trim() !== ""
+        ) &&
+        new Set(card.tags).size === card.tags.length &&
         typeof card.archived === "boolean"
     );
 }

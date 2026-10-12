@@ -26,7 +26,6 @@
                 <input id="projectFileInput" type="file" accept=".json,application/json" hidden>
             </article>
         </section>
-        <p id="errorMessage" class="error-message" hidden></p>
     </main>
     <footer class="site-footer">
         <p>
@@ -46,10 +45,20 @@
             </div>
         </form>
     </dialog>
+    <dialog id="alertDialog" class="dialog">
+        <div class="dialog-content">
+            <h2 id="alertDialogTitle"></h2>
+            <p id="alertDialogMessage"></p>
+            <div class="dialog-actions">
+                <button id="alertDialogOkButton" class="btn btn-primary" type="button">OK</button>
+            </div>
+        </div>
+    </dialog>
     <script src="js/core/constants.js"></script>
     <script src="js/core/validations.js"></script>
     <script src="js/core/utils.js"></script>
     <script src="js/core/project.js"></script>
+    <script src="js/core/dialogs.js"></script>
     <script src="js/index.js"></script>
 </body>
 </html>

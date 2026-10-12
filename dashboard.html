@@ -46,6 +46,7 @@
                         </div>
                         <div class="project-info-actions">
                             <button id="editProjectInfoButton" class="btn btn-primary" type="button">Edit Project Info</button>
+                            <button id="manageTagsButton" class="btn btn-secondary" type="button">Manage Tags</button>
                         </div>
                     </div>
                 </div>
@@ -111,6 +112,23 @@
             </div>
         </form>
     </dialog>
+    <dialog id="tagsDialog" class="dialog">
+        <div class="dialog-content">
+            <h2>Manage Tags</h2>
+            <form id="tagForm">
+                <label for="tagName">Tag Name</label>
+                <input id="tagName" type="text" maxlength="50" required>
+                <div class="dialog-actions">
+                    <button id="cancelTagEditButton" class="btn btn-secondary" type="button" hidden>Cancel Edit</button>
+                    <button id="saveTagButton" class="btn btn-primary" type="submit">Add Tag</button>
+                </div>
+            </form>
+            <div id="tagsList" class="tags-list"></div>
+            <div class="dialog-actions">
+                <button id="closeTagsButton" class="btn btn-secondary" type="button">Close</button>
+            </div>
+        </div>
+    </dialog>
     <dialog id="notesDialog" class="dialog">
         <form id="notesForm" class="dialog-content">
             <h2>Edit Notes</h2>
@@ -134,6 +152,10 @@
             </select>
             <label for="cardDescription">Description</label>
             <textarea id="cardDescription" rows="6" maxlength="5000"></textarea>
+            <div id="cardTagsSection" class="card-tags-section" hidden>
+                <label>Tags</label>
+                <div id="cardTagsList" class="card-tags-list"></div>
+            </div>
             <div class="dialog-actions">
                 <button id="deleteCardButton" class="btn btn-danger" type="button" hidden>Delete</button>
                 <button id="archiveCardButton" class="btn btn-secondary" type="button" hidden>Archive</button>
@@ -141,6 +163,15 @@
                 <button class="btn btn-primary" type="submit">Save</button>
             </div>
         </form>
+    </dialog>
+    <dialog id="alertDialog" class="dialog">
+        <div class="dialog-content">
+            <h2 id="alertDialogTitle"></h2>
+            <p id="alertDialogMessage"></p>
+            <div class="dialog-actions">
+                <button id="alertDialogOkButton" class="btn btn-primary" type="button">OK</button>
+            </div>
+        </div>
     </dialog>
     <script src="js/core/constants.js"></script>
     <script src="js/core/validations.js"></script>
@@ -150,6 +181,8 @@
     <script src="js/features/project-info.js"></script>
     <script src="js/features/notes.js"></script>
     <script src="js/features/archive.js"></script>
+    <script src="js/core/dialogs.js"></script>
+    <script src="js/features/tags.js"></script>
     <script src="js/dashboard.js"></script>
 </body>
 </html>

@@ -38,6 +38,16 @@ const CARD_TYPES = {
     BUG: "BUG"
 };
 
+const DEFAULT_TAG_NAMES = [
+    "Design",
+    "Gameplay",
+    "Programming",
+    "Audio",
+    "Animation",
+    "Testing",
+    "Documentation"
+];
+
 const VALID_CARD_TYPES = Object.values(CARD_TYPES);
 
 const VALID_LANE_IDS = Object.values(LANE_IDS);
