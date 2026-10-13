@@ -56,6 +56,26 @@
                     <span>Board</span>
                 </summary>
                 <div class="dashboard-section-content">
+                    <div class="card-filters">
+                        <div class="card-filters-controls">
+                            <input
+                                id="boardSearch"
+                                type="search"
+                                placeholder="Search cards..."
+                                aria-label="Search board cards by title"
+                            >
+                            <select id="boardTypeFilter" aria-label="Filter board by card type">
+                                <option value="">All Types</option>
+                                <option value="STORY">Story</option>
+                                <option value="BUG">Bug</option>
+                            </select>
+                            <select id="boardTagFilter" aria-label="Filter board by tag">
+                                <option value="">All Tags</option>
+                            </select>
+                            <button id="boardClearFilters" class="btn btn-secondary" type="button">Clear Filters</button>
+                        </div>
+                        <span id="boardFilterCount" class="card-filters-count" aria-live="polite"></span>
+                    </div>
                     <div id="board" class="board"></div>
                 </div>
             </details>
@@ -87,6 +107,26 @@
                     <span>Archive</span>
                 </summary>
                 <div class="dashboard-section-content">
+                    <div class="card-filters">
+                        <div class="card-filters-controls">
+                            <input
+                                id="archiveSearch"
+                                type="search"
+                                placeholder="Search archived cards..."
+                                aria-label="Search archived cards by title"
+                            >
+                            <select id="archiveTypeFilter" aria-label="Filter archive by card type">
+                                <option value="">All Types</option>
+                                <option value="STORY">Story</option>
+                                <option value="BUG">Bug</option>
+                            </select>
+                            <select id="archiveTagFilter" aria-label="Filter archive by tag">
+                                <option value="">All Tags</option>
+                            </select>
+                            <button id="archiveClearFilters" class="btn btn-secondary" type="button">Clear Filters</button>
+                        </div>
+                        <span id="archiveFilterCount" class="card-filters-count" aria-live="polite"></span>
+                    </div>
                     <div id="archive" class="archive"></div>
                 </div>
             </details>
@@ -183,6 +223,7 @@
     <script src="js/features/archive.js"></script>
     <script src="js/core/dialogs.js"></script>
     <script src="js/features/tags.js"></script>
+    <script src="js/features/filters.js"></script>
     <script src="js/dashboard.js"></script>
 </body>
 </html>

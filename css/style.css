@@ -1076,13 +1076,41 @@ input {
 }
 
 .dialog-content .card-tag-option input[type="checkbox"] {
+    appearance: none;
     width: 16px;
     height: 16px;
     flex-shrink: 0;
     margin: 0;
     padding: 0;
-    accent-color: var(--color-accent);
+    background: var(--color-accent-soft);
+    border: 1px solid var(--color-accent);
+    border-radius: 4px;
     cursor: pointer;
+}
+
+.dialog-content .card-tag-option input[type="checkbox"]:checked {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+.dialog-content .card-tag-option input[type="checkbox"]:checked::after {
+    content: "✓";
+    display: block;
+    color: var(--color-black);
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 14px;
+    text-align: center;
+}
+
+.dialog-bug .dialog-content .card-tag-option input[type="checkbox"] {
+    background: var(--color-bug-bg);
+    border-color: var(--color-bug-border);
+}
+
+.dialog-bug .dialog-content .card-tag-option input[type="checkbox"]:checked {
+    background: var(--color-bug-hover);
+    border-color: var(--color-bug-hover);
 }
 
 .card-tag-option span {
@@ -1147,6 +1175,80 @@ input {
     border-color: var(--color-bug-hover);
 }
 
-.dialog-bug .dialog-content .card-tag-option input[type="checkbox"] {
-    accent-color: var(--color-bug-hover);
+.dialog-content .card-tag-option input[type="checkbox"]:focus-visible {
+    outline: 2px solid var(--color-accent-hover);
+    outline-offset: 3px;
+    box-shadow: none;
+}
+
+.dialog-bug .dialog-content .card-tag-option input[type="checkbox"]:focus-visible {
+    outline-color: var(--color-bug-hover);
+    box-shadow: none;
+}
+
+.card-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.card-filters-controls {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.card-filters-controls input,
+.card-filters-controls select {
+    height: 42px;
+    padding: 0 14px;
+    background: var(--color-bg-soft);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color var(--transition);
+}
+
+.card-filters-controls input {
+    flex: 1;
+    min-width: 220px;
+}
+
+.card-filters-controls select {
+    min-width: 150px;
+    cursor: pointer;
+}
+
+.card-filters-controls input::placeholder {
+    color: var(--color-text-muted);
+}
+
+.card-filters-controls input:hover,
+.card-filters-controls select:hover {
+    border-color: var(--color-accent);
+}
+
+.card-filters-controls input:focus,
+.card-filters-controls select:focus {
+    border-color: var(--color-accent-hover);
+}
+
+.card-filters-controls select option {
+    background: var(--color-bg-soft);
+    color: var(--color-text);
+}
+
+.card-filters-controls .btn {
+    min-height: 42px;
+    white-space: nowrap;
+}
+
+.card-filters-count {
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
 }

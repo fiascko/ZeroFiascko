@@ -24,7 +24,10 @@ function initializeDashboard() {
     }
 
     initializeDashboardEvents();
+    initializeCardFilters();
+
     projectTitle.textContent = currentProject.project.title;
+
     renderDashboard();
 }
 
@@ -40,6 +43,7 @@ function initializeDashboardEvents() {
 
 function renderDashboard() {
     renderProjectInfo(currentProject);
+    renderCardFilterTags();
     renderBoard();
     renderStatistics(currentProject);
     renderNotes(currentProject);
@@ -49,17 +53,32 @@ function renderDashboard() {
 function renderBoard() {
     board.replaceChildren();
 
+    const activeCards = currentProject.cards.filter(
+        (card) => !card.archived
+    );
+
+    const filteredCards = filterCards(activeCards, "board");
+
     currentProject.lanes.forEach((lane) => {
-        board.appendChild(createLaneElement(lane));
+        board.appendChild(createLaneElement(lane, filteredCards));
     });
+
+    updateCardFilterCount(
+        "board",
+        filteredCards.length,
+        activeCards.length
+    );
 }
 
-function createLaneElement(lane) {
+function createLaneElement(lane, filteredCards) {
     const laneElement = document.createElement("section");
     laneElement.className = "board-lane";
     laneElement.id = lane.id;
 
-    const cards = getActiveCardsByLane(lane.id);
+    const cards = filteredCards.filter(
+        (card) => card.lane === lane.id
+    );
+
     const header = createLaneHeader(lane, cards.length);
     const cardList = createCardList(cards);
     const addCardButton = createAddCardButton(lane.id);

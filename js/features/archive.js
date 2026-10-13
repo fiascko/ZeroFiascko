@@ -7,6 +7,14 @@ function renderArchive(project) {
         (card) => card.archived
     );
 
+    const filteredCards = filterCards(archivedCards, "archive");
+
+    updateCardFilterCount(
+        "archive",
+        filteredCards.length,
+        archivedCards.length
+    );
+
     if (archivedCards.length === 0) {
         archive.appendChild(
             createArchiveEmptyMessage()
@@ -15,10 +23,18 @@ function renderArchive(project) {
         return;
     }
 
+    if (filteredCards.length === 0) {
+        archive.appendChild(
+            createArchiveEmptyMessage("No matching cards.")
+        );
+
+        return;
+    }
+
     const archiveGrid = document.createElement("div");
     archiveGrid.className = "archive-grid";
 
-    archivedCards.forEach((card) => {
+    filteredCards.forEach((card) => {
         archiveGrid.appendChild(
             createArchivedCardElement(card, project)
         );
@@ -27,10 +43,10 @@ function renderArchive(project) {
     archive.appendChild(archiveGrid);
 }
 
-function createArchiveEmptyMessage() {
+function createArchiveEmptyMessage(message = "No archived cards.") {
     const emptyMessage = document.createElement("p");
     emptyMessage.className = "archive-empty";
-    emptyMessage.textContent = "No archived cards.";
+    emptyMessage.textContent = message;
     return emptyMessage;
 }
 

@@ -39,10 +39,14 @@ ZeroFiascko does not require sending your project data to a remote server or thi
 - Archive and unarchive cards
 - Create, rename and delete project tags
 - Assign multiple tags to cards
+- Search cards by title
+- Filter cards by type and tag
+- Independent Board and Archive filters
+- Live filtered card counts and clear filters
 - Project information and description
 - Project notes
 - Project statistics and completion tracking
-- Local autosave
+- Automatic local saving
 - JSON project files
 - Import and export projects
 - Fully offline
@@ -102,6 +106,7 @@ ZeroFiascko/
 │   │
 │   ├── features/
 │   │   ├── archive.js
+│   │   ├── filters.js
 │   │   ├── notes.js
 │   │   ├── project-info.js
 │   │   ├── statistics.js
@@ -128,9 +133,13 @@ ZeroFiascko projects are stored using simple JSON files.
 
 This makes your projects portable, easy to back up and independent from ZeroFiascko itself.
 
+Changes are automatically saved in your browser's local storage, while JSON files provide a portable copy of your project.
+
 You control where your project files are stored and when they are exported or shared.
 
 For better organization, it is recommended to store your project files in the included `saves/` folder, but you are free to save them anywhere on your computer.
+
+Remember to export your project regularly. Browser storage can be cleared, so JSON files should be used for long-term backups.
 
 
 ## License
