@@ -93,6 +93,8 @@ No setup required.
 
 ```text
 ZeroFiascko/
+├── assets/
+│   └── favicon.png
 ├── css/
 │   └── style.css
 │
