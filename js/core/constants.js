@@ -1,3 +1,5 @@
+/* Copyright (c) Fiascko. All rights reserved. | Project: ZeroFiascko | File: constants.js */
+
 const PROJECT_FORMAT = "ZeroFiascko";
 const PROJECT_VERSION = 1;
 const LOCAL_STORAGE_PROJECT_KEY = "ZeroFiasckoProject";

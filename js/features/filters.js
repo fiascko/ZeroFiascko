@@ -1,3 +1,5 @@
+/* Copyright (c) Fiascko. All rights reserved. | Project: ZeroFiascko | File: filters.js */
+
 const cardFilters = {
     board: {
         search: document.getElementById("boardSearch"),

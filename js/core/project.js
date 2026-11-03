@@ -1,3 +1,5 @@
+/* Copyright (c) Fiascko. All rights reserved. | Project: ZeroFiascko | File: project.js */
+
 function createProject(title) {
     const now = new Date().toISOString();
 

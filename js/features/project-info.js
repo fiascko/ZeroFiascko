@@ -1,3 +1,5 @@
+/* Copyright (c) Fiascko. All rights reserved. | Project: ZeroFiascko | File: project-info.js */
+
 const projectInfoTitleDisplay = document.getElementById("projectInfoTitleDisplay");
 const projectInfoDescriptionDisplay = document.getElementById("projectInfoDescriptionDisplay");
 const projectCreatedAt = document.getElementById("projectCreatedAt");

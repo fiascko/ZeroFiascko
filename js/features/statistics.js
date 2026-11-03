@@ -1,3 +1,5 @@
+/* Copyright (c) Fiascko. All rights reserved. | Project: ZeroFiascko | File: statistics.js */
+
 const statistics = document.getElementById("statistics");
 
 function renderStatistics(project) {

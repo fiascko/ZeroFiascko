@@ -1,3 +1,4 @@
+/* Copyright (c) Fiascko. All rights reserved. | Project: ZeroFiascko | File: tags.js */
 
 const manageTagsButton = document.getElementById("manageTagsButton");
 const tagsDialog = document.getElementById("tagsDialog");

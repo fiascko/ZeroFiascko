@@ -1,3 +1,5 @@
+/* Copyright (c) Fiascko. All rights reserved. | Project: ZeroFiascko | File: dialog.js */
+
 const alertDialog = document.getElementById("alertDialog");
 const alertDialogTitle = document.getElementById("alertDialogTitle");
 const alertDialogMessage = document.getElementById("alertDialogMessage");

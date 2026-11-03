@@ -1,3 +1,5 @@
+/* Copyright (c) Fiascko. All rights reserved. | Project: ZeroFiascko | File: validations.js */
+
 function isValidProject(data) {
     if (!data || typeof data !== "object" || Array.isArray(data)) {
         return false;

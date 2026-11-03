@@ -1,3 +1,5 @@
+/* Copyright (c) Fiascko. All rights reserved. | Project: ZeroFiascko | File: dashboard.js */
+
 const projectTitle = document.getElementById("projectTitle");
 const board = document.getElementById("board");
 const closeButton = document.getElementById("closeButton");

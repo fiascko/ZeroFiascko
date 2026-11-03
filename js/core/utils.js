@@ -1,3 +1,5 @@
+/* Copyright (c) Fiascko. All rights reserved. | Project: ZeroFiascko | File: utils.js */
+
 function sanitizeFileName(fileName) {
     const sanitizedFileName = fileName
         .trim()

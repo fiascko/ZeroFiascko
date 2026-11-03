@@ -1,3 +1,5 @@
+/* Copyright (c) Fiascko. All rights reserved. | Project: ZeroFiascko | File: note.js */
+
 const notesDisplay = document.getElementById("notesDisplay");
 const editNotesButton = document.getElementById("editNotesButton");
 const notesDialog = document.getElementById("notesDialog");

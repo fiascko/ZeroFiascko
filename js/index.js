@@ -1,3 +1,5 @@
+/* Copyright (c) Fiascko. All rights reserved. | Project: ZeroFiascko | File: index.js */
+
 const newProjectButton = document.getElementById("newProjectButton");
 const openProjectButton = document.getElementById("openProjectButton");
 const projectFileInput = document.getElementById("projectFileInput");

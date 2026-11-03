@@ -1,3 +1,5 @@
+/* Copyright (c) Fiascko. All rights reserved. | Project: ZeroFiascko | File: archive.js */
+
 const archive = document.getElementById("archive");
 
 function renderArchive(project) {
