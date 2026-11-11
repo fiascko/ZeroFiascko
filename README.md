@@ -81,6 +81,12 @@ No external dependencies.
 
 ## Usage
 
+You can try ZeroFiascko directly in your browser:
+
+https://www.fiascko.com/ZeroFiascko/
+
+Or run it locally:
+
 1. Download or clone the repository.
 2. Open `index.html` in your browser.
 3. Create a new project or open an existing ZeroFiascko JSON project.
