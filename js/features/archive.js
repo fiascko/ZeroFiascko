@@ -61,7 +61,7 @@ function createArchivedCardElement(card, project) {
     }
 
     const title = document.createElement("h3");
-    title.textContent = card.title;
+    title.textContent = `#${card.id.slice(4)} ${card.title}`;
 
     const tags = createCardTags(card);
 

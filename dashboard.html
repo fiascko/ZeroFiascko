@@ -70,7 +70,7 @@
                                 id="boardSearch"
                                 type="search"
                                 placeholder="Search cards..."
-                                aria-label="Search board cards by title"
+                                aria-label="Search board cards by title or number"
                             >
                             <select id="boardTypeFilter" aria-label="Filter board by card type">
                                 <option value="">All Types</option>
@@ -121,7 +121,7 @@
                                 id="archiveSearch"
                                 type="search"
                                 placeholder="Search archived cards..."
-                                aria-label="Search archived cards by title"
+                                aria-label="Search archived cards by title or number"
                             >
                             <select id="archiveTypeFilter" aria-label="Filter archive by card type">
                                 <option value="">All Types</option>
@@ -190,8 +190,10 @@
     </dialog>
     <dialog id="cardDialog" class="dialog">
         <form id="cardForm" class="dialog-content">
-            <h2 id="cardDialogTitle">New Card</h2>
-            <label for="cardTitle">Title</label>
+            <div class="card-title-header">
+                <span id="cardNumber" hidden></span>
+                <label for="cardTitle">Title</label>
+            </div>
             <input id="cardTitle" type="text" maxlength="255" required>
             <label for="cardType">Type</label>
             <select id="cardType">

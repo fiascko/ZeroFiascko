@@ -36,10 +36,11 @@ ZeroFiascko does not require sending your project data to a remote server or thi
 - Backlog, Analyse, In Progress, QA and Done lanes
 - Story and Bug card types
 - Create, edit, move and delete cards
+- Automatic card numbering
 - Archive and unarchive cards
 - Create, rename and delete project tags
 - Assign multiple tags to cards
-- Search cards by title
+- Search cards by title or number
 - Filter cards by type and tag
 - Independent Board and Archive filters
 - Live filtered card counts and clear filters

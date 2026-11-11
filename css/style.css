@@ -193,9 +193,16 @@ input {
     color: var(--color-white);
 }
 
-.dialog-content label {
+.dialog-content label,
+.card-title-header span {
     color: var(--color-text-muted);
     font-weight: 600;
+}
+
+.card-title-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .dialog-content input,
@@ -907,7 +914,8 @@ input {
     color: var(--color-white);
 }
 
-.dialog-bug .dialog-content label {
+.dialog-bug .dialog-content label,
+.dialog-bug .card-title-header span {
     color: var(--color-bug-hover);
 }
 

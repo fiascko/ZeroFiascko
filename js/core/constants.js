@@ -1,7 +1,7 @@
 /* Copyright (c) Fiascko. All rights reserved. | Project: ZeroFiascko | File: constants.js */
 
 const PROJECT_FORMAT = "ZeroFiascko";
-const PROJECT_VERSION = 1;
+const PROJECT_VERSION = 1.1;
 const LOCAL_STORAGE_PROJECT_KEY = "ZeroFiasckoProject";
 
 const LANE_IDS = {
@@ -13,26 +13,11 @@ const LANE_IDS = {
 };
 
 const LANES = [
-    {
-        id: LANE_IDS.BACKLOG,
-        name: "Backlog"
-    },
-    {
-        id: LANE_IDS.ANALYSE,
-        name: "Analyse"
-    },
-    {
-        id: LANE_IDS.IN_PROGRESS,
-        name: "In Progress"
-    },
-    {
-        id: LANE_IDS.QA,
-        name: "QA"
-    },
-    {
-        id: LANE_IDS.DONE,
-        name: "Done"
-    }
+    { id: LANE_IDS.BACKLOG, name: "Backlog" },
+    { id: LANE_IDS.ANALYSE, name: "Analyse" },
+    { id: LANE_IDS.IN_PROGRESS, name: "In Progress" },
+    { id: LANE_IDS.QA, name: "QA" },
+    { id: LANE_IDS.DONE, name: "Done" }
 ];
 
 const CARD_TYPES = {
@@ -51,5 +36,4 @@ const DEFAULT_TAG_NAMES = [
 ];
 
 const VALID_CARD_TYPES = Object.values(CARD_TYPES);
-
 const VALID_LANE_IDS = Object.values(LANE_IDS);

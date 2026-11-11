@@ -73,7 +73,8 @@ function filterCards(cards, section) {
     const tag = filters.tag.value;
 
     return cards.filter((card) => {
-        const matchesSearch = card.title.toLowerCase().includes(search);
+        const searchableText = `#${card.id.slice(4)} ${card.title}`.toLowerCase();
+        const matchesSearch = searchableText.includes(search);
         const matchesType = !type || card.type === type;
         const matchesTag = !tag || card.tags.includes(tag);
 

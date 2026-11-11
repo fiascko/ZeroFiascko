@@ -6,7 +6,7 @@ const closeButton = document.getElementById("closeButton");
 const saveProjectButton = document.getElementById("saveProjectButton");
 const cardDialog = document.getElementById("cardDialog");
 const cardForm = document.getElementById("cardForm");
-const cardDialogTitle = document.getElementById("cardDialogTitle");
+const cardNumber = document.getElementById("cardNumber");
 const cardTitleInput = document.getElementById("cardTitle");
 const cardTypeInput = document.getElementById("cardType");
 const cardDescriptionInput = document.getElementById("cardDescription");
@@ -166,7 +166,7 @@ function createCardElement(card) {
 
 function createCardTitle(card) {
     const title = document.createElement("h3");
-    title.textContent = card.title;
+    title.textContent = `#${card.id.slice(4)} ${card.title}`;
 
     title.addEventListener("click", () => {
         openCardDialog(card);
@@ -283,7 +283,7 @@ function openNewCardDialog(laneId) {
     selectedCard = null;
     selectedLaneId = laneId;
 
-    cardDialogTitle.textContent = "New Card";
+    cardNumber.hidden = true;
     cardTitleInput.value = "";
     cardTypeInput.value = CARD_TYPES.STORY;
     cardDescriptionInput.value = "";
@@ -302,7 +302,8 @@ function openCardDialog(card) {
     selectedCard = card;
     selectedLaneId = null;
 
-    cardDialogTitle.textContent = "Card";
+    cardNumber.textContent = `#${card.id.slice(4)}`;
+    cardNumber.hidden = false;
     cardTitleInput.value = card.title;
     cardTypeInput.value = card.type;
     cardDescriptionInput.value = card.description;
