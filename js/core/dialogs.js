@@ -15,3 +15,21 @@ function showAlert(title, message) {
 alertDialogOkButton.addEventListener("click", () => {
     alertDialog.close();
 });
+
+document.querySelectorAll("dialog").forEach((dialog) => {
+    dialog.addEventListener("click", (event) => {
+        if (event.target !== dialog) {
+            return;
+        }
+
+        const rect = dialog.getBoundingClientRect();
+        const isOutside = event.clientX < rect.left ||
+            event.clientX > rect.right ||
+            event.clientY < rect.top ||
+            event.clientY > rect.bottom;
+
+        if (isOutside) {
+            dialog.close();
+        }
+    });
+});
