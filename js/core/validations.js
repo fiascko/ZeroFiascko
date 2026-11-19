@@ -132,6 +132,8 @@ function isValidCard(card) {
         VALID_LANE_IDS.includes(card.lane) &&
         typeof card.type === "string" &&
         VALID_CARD_TYPES.includes(card.type) &&
+        typeof card.priority === "number" &&
+        VALID_CARD_PRIORITIES.includes(card.priority) &&
         Array.isArray(card.tags) &&
         card.tags.every((tagId) =>
             typeof tagId === "string" &&

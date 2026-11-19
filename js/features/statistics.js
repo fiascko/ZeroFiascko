@@ -50,6 +50,7 @@ function renderStatistics(project) {
     statistics.appendChild(summary);
     statistics.appendChild(progressSection);
     statistics.appendChild(lanesSection);
+    statistics.appendChild(createPriorityStatistics(activeCards));
 }
 
 function getActiveCards(project) {
@@ -220,4 +221,40 @@ function createLaneStatistic(lane, activeCards) {
     item.appendChild(value);
 
     return item;
+}
+
+function createPriorityStatistics(activeCards) {
+    const section = document.createElement("div");
+    section.className = "statistics-priorities";
+
+    const title = document.createElement("h3");
+    title.textContent = "Cards by Priority";
+
+    const priorities = document.createElement("div");
+    priorities.className = "statistics-priority-list";
+
+    const priorityLevels = [
+        { value: CARD_PRIORITIES.LOW, name: "Low" },
+        { value: CARD_PRIORITIES.MEDIUM, name: "Medium" },
+        { value: CARD_PRIORITIES.HIGH, name: "High" }
+    ];
+
+    priorityLevels.forEach((priority) => {
+        const count = activeCards.filter(
+            (card) => card.priority === priority.value
+        ).length;
+
+        const card = createStatisticCard(priority.name, count);
+        card.classList.add(
+            "statistic-priority",
+            `statistic-priority-${priority.value}`
+        );
+
+        priorities.appendChild(card);
+    });
+
+    section.appendChild(title);
+    section.appendChild(priorities);
+
+    return section;
 }

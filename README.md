@@ -35,18 +35,20 @@ ZeroFiascko does not require sending your project data to a remote server or thi
 - Kanban-style project board
 - Backlog, Analyse, In Progress, QA and Done lanes
 - Story and Bug card types
+- Low, Medium and High card priorities
+- Color-coded priority indicators
 - Create, edit, move and delete cards
 - Automatic card numbering
 - Archive and unarchive cards
 - Create, rename and delete project tags
 - Assign multiple tags to cards
 - Search cards by title or number
-- Filter cards by type and tag
+- Filter cards by type, priority and tag
 - Independent Board and Archive filters
 - Live filtered card counts and clear filters
 - Project information and description
 - Project notes
-- Project statistics and completion tracking
+- Project statistics, including card priorities and completion tracking
 - Automatic local saving
 - JSON project files
 - Import and export projects
@@ -141,6 +143,8 @@ ZeroFiascko/
 ZeroFiascko projects are stored using simple JSON files.
 
 This makes your projects portable, easy to back up and independent from ZeroFiascko itself.
+
+ZeroFiascko uses a versioned JSON project format. Project files must match the supported format version to be imported successfully.
 
 Changes are automatically saved in your browser's local storage, while JSON files provide a portable copy of your project.
 

@@ -21,6 +21,9 @@
     --dashboard-min-width: 1400px;
     --border-radius: 12px;
     --transition: 0.2s ease;
+    --color-priority-low: #8DAF9C;
+    --color-priority-medium: #C59379;
+    --color-priority-high: #B85C5C;
 }
 
 * {
@@ -444,6 +447,10 @@ input {
     resize: none;
     scrollbar-width: thin;
     scrollbar-color: var(--color-accent) var(--color-bg-soft);
+}
+
+#cardDescription {
+    min-height: 200px;
 }
 
 .dialog-content textarea:focus {
@@ -1261,4 +1268,176 @@ input {
 .card-filters-count {
     color: var(--color-text-muted);
     font-size: 0.85rem;
+}
+
+.board-card h3,
+.archive-card h3 {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.board-card h3 > span:last-child,
+.archive-card h3 > span:last-child {
+    min-width: 0;
+}
+
+.card-priority {
+    position: relative;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+    margin-top: 0.35em;
+    border-radius: 50%;
+}
+
+.card-priority::after {
+    content: attr(data-priority);
+    position: absolute;
+    z-index: 10;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    padding: 6px 10px;
+    background: var(--color-bg-soft);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    color: var(--color-text);
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1.4;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(-50%);
+}
+
+.card-priority:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+.card-title-header .card-priority {
+    margin-top: 0;
+}
+
+.card-priority-1 {
+    background: var(--color-priority-low);
+}
+
+.card-priority-2 {
+    background: var(--color-priority-medium);
+}
+
+.card-priority-3 {
+    background: var(--color-priority-high);
+}
+
+.card-priority-fieldset {
+    min-width: 0;
+    border: 0;
+}
+
+.card-priority-fieldset legend {
+    margin-bottom: 12px;
+    color: var(--color-text-muted);
+    font-weight: 600;
+}
+
+.card-priority-options {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.dialog-content .card-priority-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-width: 0;
+    padding: 12px;
+    background: var(--color-bg-soft);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    color: var(--color-text);
+    cursor: pointer;
+    font-weight: 400;
+}
+
+.dialog-content .card-priority-option input {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 0;
+    border: 2px solid var(--priority-color);
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+}
+
+.card-priority-option input:checked {
+    background: var(--priority-color);
+    box-shadow: inset 0 0 0 3px var(--color-bg-soft);
+}
+
+.dialog-content .card-priority-option:has(input:checked) {
+    border-color: var(--priority-color);
+}
+
+.dialog-content .card-priority-option:has(input:focus-visible) {
+    outline: 2px solid var(--priority-color);
+    outline-offset: 3px;
+}
+
+.card-priority-option-low {
+    --priority-color: var(--color-priority-low);
+}
+
+.card-priority-option-medium {
+    --priority-color: var(--color-priority-medium);
+}
+
+.card-priority-option-high {
+    --priority-color: var(--color-priority-high);
+}
+
+.dialog-bug .dialog-content .card-priority-option {
+    border-color: var(--color-bug-border);
+}
+
+.dialog-bug .dialog-content .card-priority-option:has(input:checked) {
+    border-color: var(--priority-color);
+}
+
+.statistics-priorities {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.statistics-priorities h3 {
+    color: var(--color-white);
+    font-size: 1rem;
+}
+
+.statistics-priority-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.statistic-priority-1 .statistic-value {
+    color: var(--color-priority-low);
+}
+
+.statistic-priority-2 .statistic-value {
+    color: var(--color-priority-medium);
+}
+
+.statistic-priority-3 .statistic-value {
+    color: var(--color-priority-high);
 }

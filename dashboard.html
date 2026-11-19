@@ -77,6 +77,12 @@
                                 <option value="STORY">Story</option>
                                 <option value="BUG">Bug</option>
                             </select>
+                            <select id="boardPriorityFilter" aria-label="Filter board by priority">
+                                <option value="">All Priorities</option>
+                                <option value="1">Low</option>
+                                <option value="2">Medium</option>
+                                <option value="3">High</option>
+                            </select>
                             <select id="boardTagFilter" aria-label="Filter board by tag">
                                 <option value="">All Tags</option>
                             </select>
@@ -127,6 +133,12 @@
                                 <option value="">All Types</option>
                                 <option value="STORY">Story</option>
                                 <option value="BUG">Bug</option>
+                            </select>
+                            <select id="archivePriorityFilter" aria-label="Filter archive by priority">
+                                <option value="">All Priorities</option>
+                                <option value="1">Low</option>
+                                <option value="2">Medium</option>
+                                <option value="3">High</option>
                             </select>
                             <select id="archiveTagFilter" aria-label="Filter archive by tag">
                                 <option value="">All Tags</option>
@@ -191,6 +203,7 @@
     <dialog id="cardDialog" class="dialog">
         <form id="cardForm" class="dialog-content">
             <div class="card-title-header">
+                <span id="cardPriorityIndicator" class="card-priority card-priority-2" aria-label="Medium priority"></span>
                 <span id="cardNumber" hidden></span>
                 <label for="cardTitle">Title</label>
             </div>
@@ -200,6 +213,23 @@
                 <option value="STORY">Story</option>
                 <option value="BUG">Bug</option>
             </select>
+            <fieldset id="cardPriority" class="card-priority-fieldset">
+                <legend>Priority</legend>
+                <div class="card-priority-options">
+                    <label class="card-priority-option card-priority-option-low">
+                        <input type="radio" name="cardPriority" value="1">
+                        <span>Low</span>
+                    </label>
+                    <label class="card-priority-option card-priority-option-medium">
+                        <input type="radio" name="cardPriority" value="2" checked>
+                        <span>Medium</span>
+                    </label>
+                    <label class="card-priority-option card-priority-option-high">
+                        <input type="radio" name="cardPriority" value="3">
+                        <span>High</span>
+                    </label>
+                </div>
+            </fieldset>
             <label for="cardDescription">Description</label>
             <textarea id="cardDescription" rows="6" maxlength="5000"></textarea>
             <div id="cardTagsSection" class="card-tags-section" hidden>

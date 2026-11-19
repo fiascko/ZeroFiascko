@@ -9,6 +9,8 @@ const cardForm = document.getElementById("cardForm");
 const cardNumber = document.getElementById("cardNumber");
 const cardTitleInput = document.getElementById("cardTitle");
 const cardTypeInput = document.getElementById("cardType");
+const cardPriorityInput = document.getElementById("cardPriority");
+const cardPriorityIndicator = document.getElementById("cardPriorityIndicator");
 const cardDescriptionInput = document.getElementById("cardDescription");
 const cardTagsSection = document.getElementById("cardTagsSection");
 const cardTagsList = document.getElementById("cardTagsList");
@@ -41,6 +43,7 @@ function initializeDashboardEvents() {
     saveProjectButton.addEventListener("click", downloadCurrentProject);
     closeButton.addEventListener("click", closeDashboard);
     cardTypeInput.addEventListener("change", updateCardDialogStyle);
+    cardPriorityInput.addEventListener("change", updateCardPriorityIndicator);
 }
 
 function renderDashboard() {
@@ -164,15 +167,74 @@ function createCardElement(card) {
     return cardElement;
 }
 
+
 function createCardTitle(card) {
     const title = document.createElement("h3");
-    title.textContent = `#${card.id.slice(4)} ${card.title}`;
+    const priority = createCardPriorityIndicator(card);
+    const text = document.createElement("span");
+    
+    text.textContent = `#${card.id.slice(4)} ${card.title}`;
+
+    title.appendChild(priority);
+    title.appendChild(text);
 
     title.addEventListener("click", () => {
         openCardDialog(card);
     });
 
     return title;
+}
+
+
+function createCardPriorityIndicator(card) {
+    const priority = document.createElement("span");
+
+    setCardPriorityIndicator(priority, card.priority);
+
+    return priority;
+}
+
+function setCardPriorityIndicator(element, priority) {
+    const priorityNames = {
+        [CARD_PRIORITIES.LOW]: "Low",
+        [CARD_PRIORITIES.MEDIUM]: "Medium",
+        [CARD_PRIORITIES.HIGH]: "High"
+    };
+
+    const priorityName = priorityNames[priority];
+
+    element.className = `card-priority card-priority-${priority}`;
+    element.dataset.priority = `${priorityName} priority`;
+    element.setAttribute("role", "img");
+    element.setAttribute("aria-label", `${priorityName} priority`);
+}
+
+function getSelectedCardPriority() {
+    const selectedPriority = cardPriorityInput.querySelector(
+        'input[name="cardPriority"]:checked'
+    );
+
+    return selectedPriority ? Number(selectedPriority.value) : null;
+}
+
+function setSelectedCardPriority(priority) {
+    const input = cardPriorityInput.querySelector(
+        `input[name="cardPriority"][value="${priority}"]`
+    );
+
+    if (input) {
+        input.checked = true;
+    }
+
+    updateCardPriorityIndicator();
+}
+
+function updateCardPriorityIndicator() {
+    const priority = getSelectedCardPriority();
+
+    if (VALID_CARD_PRIORITIES.includes(priority)) {
+        setCardPriorityIndicator(cardPriorityIndicator, priority);
+    }
 }
 
 function createCardTags(card) {
@@ -286,6 +348,7 @@ function openNewCardDialog(laneId) {
     cardNumber.hidden = true;
     cardTitleInput.value = "";
     cardTypeInput.value = CARD_TYPES.STORY;
+    setSelectedCardPriority(CARD_PRIORITIES.MEDIUM);
     cardDescriptionInput.value = "";
 
     renderCardTags();
@@ -295,7 +358,8 @@ function openNewCardDialog(laneId) {
 
     updateCardDialogStyle();
     cardDialog.showModal();
-    cardTitleInput.focus();
+    cardTitleInput.focus({ preventScroll: true });
+    cardDialog.scrollTop = 0;
 }
 
 function openCardDialog(card) {
@@ -306,6 +370,7 @@ function openCardDialog(card) {
     cardNumber.hidden = false;
     cardTitleInput.value = card.title;
     cardTypeInput.value = card.type;
+    setSelectedCardPriority(card.priority);
     cardDescriptionInput.value = card.description;
 
     renderCardTags(card.tags);
@@ -315,7 +380,8 @@ function openCardDialog(card) {
 
     updateCardDialogStyle();
     cardDialog.showModal();
-    cardTitleInput.focus();
+    cardTitleInput.focus({ preventScroll: true });
+    cardDialog.scrollTop = 0;
 }
 
 function closeCardDialog() {
@@ -324,21 +390,21 @@ function closeCardDialog() {
 
 function saveCard(event) {
     event.preventDefault();
-
     const title = cardTitleInput.value.trim();
     const type = cardTypeInput.value;
+    const priority = getSelectedCardPriority();
     const description = cardDescriptionInput.value.trim();
     const tags = getSelectedCardTags();
 
-    if (!title) {
+    if (!title || !VALID_CARD_PRIORITIES.includes(priority)) {
         return;
     }
 
     if (selectedCard) {
-        updateSelectedCard(title, description, type, tags);
+        updateSelectedCard(title, description, type, priority, tags);
     }
     else {
-        createCard(title, description, type, tags);
+        createCard(title, description, type, priority, tags);
     }
 
     saveProject();
@@ -346,20 +412,22 @@ function saveCard(event) {
     renderDashboard();
 }
 
-function updateSelectedCard(title, description, type, tags) {
+function updateSelectedCard(title, description, type, priority, tags) {
     selectedCard.title = title;
     selectedCard.type = type;
+    selectedCard.priority = priority;
     selectedCard.description = description;
     selectedCard.tags = tags;
 }
 
-function createCard(title, description, type, tags) {
+function createCard(title, description, type, priority, tags) {
     const card = {
         id: generateCardId(),
         title: title,
         description: description,
         lane: selectedLaneId,
         type: type,
+        priority: priority,
         tags: tags,
         archived: false
     };
@@ -382,9 +450,21 @@ function deleteSelectedCard() {
 }
 
 function archiveSelectedCard() {
-    if (!selectedCard) {
+    if (!selectedCard || !cardForm.reportValidity()) {
         return;
     }
+
+    const title = cardTitleInput.value.trim();
+    const type = cardTypeInput.value;
+    const priority = getSelectedCardPriority();
+    const description = cardDescriptionInput.value.trim();
+    const tags = getSelectedCardTags();
+
+    if (!title || !VALID_CARD_PRIORITIES.includes(priority)) {
+        return;
+    }
+
+    updateSelectedCard(title, description, type, priority, tags);
 
     selectedCard.archived = true;
 
