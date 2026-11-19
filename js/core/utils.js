@@ -44,13 +44,15 @@ function generateCardId() {
 
 function initializeFooter() {
     const currentYear = document.getElementById("currentYear");
+    const currentVersion = document.getElementById("currentVersion");
     const backToTop = document.getElementById("backToTop");
 
-    if (!currentYear || !backToTop) {
+    if (!currentYear || !currentVersion || !backToTop) {
         return;
     }
 
     currentYear.textContent = new Date().getFullYear();
+    currentVersion.textContent = PROJECT_VERSION;
 
     function updateBackToTopVisibility() {
         if (window.scrollY > 100) {
