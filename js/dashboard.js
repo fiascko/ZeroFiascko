@@ -11,6 +11,8 @@ const cardTitleInput = document.getElementById("cardTitle");
 const cardTypeInput = document.getElementById("cardType");
 const cardPriorityInput = document.getElementById("cardPriority");
 const cardPriorityIndicator = document.getElementById("cardPriorityIndicator");
+const cardRiskInput = document.getElementById("cardRisk");
+const cardRiskIndicator = document.getElementById("cardRiskIndicator");
 const cardDescriptionInput = document.getElementById("cardDescription");
 const cardTagsSection = document.getElementById("cardTagsSection");
 const cardTagsList = document.getElementById("cardTagsList");
@@ -44,6 +46,7 @@ function initializeDashboardEvents() {
     closeButton.addEventListener("click", closeDashboard);
     cardTypeInput.addEventListener("change", updateCardDialogStyle);
     cardPriorityInput.addEventListener("change", updateCardPriorityIndicator);
+    cardRiskInput.addEventListener("change", updateCardRiskIndicator);
 }
 
 function renderDashboard() {
@@ -167,15 +170,16 @@ function createCardElement(card) {
     return cardElement;
 }
 
-
 function createCardTitle(card) {
     const title = document.createElement("h3");
     const priority = createCardPriorityIndicator(card);
+    const risk = createCardRiskIndicator(card);
     const text = document.createElement("span");
-    
+
     text.textContent = `#${card.id.slice(4)} ${card.title}`;
 
     title.appendChild(priority);
+    title.appendChild(risk);
     title.appendChild(text);
 
     title.addEventListener("click", () => {
@@ -185,55 +189,78 @@ function createCardTitle(card) {
     return title;
 }
 
-
 function createCardPriorityIndicator(card) {
-    const priority = document.createElement("span");
-
-    setCardPriorityIndicator(priority, card.priority);
-
-    return priority;
+    return createCardLevelIndicator("priority", card.priority);
 }
 
-function setCardPriorityIndicator(element, priority) {
-    const priorityNames = {
-        [CARD_PRIORITIES.LOW]: "Low",
-        [CARD_PRIORITIES.MEDIUM]: "Medium",
-        [CARD_PRIORITIES.HIGH]: "High"
+function createCardRiskIndicator(card) {
+    return createCardLevelIndicator("risk", card.risk);
+}
+
+function createCardLevelIndicator(type, level) {
+    const indicator = document.createElement("span");
+    setCardLevelIndicator(indicator, type, level);
+    return indicator;
+}
+
+function setCardLevelIndicator(element, type, level) {
+    const levelNames = {
+        [CARD_LEVELS.LOW]: "Low",
+        [CARD_LEVELS.MEDIUM]: "Medium",
+        [CARD_LEVELS.HIGH]: "High"
     };
 
-    const priorityName = priorityNames[priority];
-
-    element.className = `card-priority card-priority-${priority}`;
-    element.dataset.priority = `${priorityName} priority`;
+    const label = `${levelNames[level]} ${type}`;
+    element.className = `card-indicator card-${type} card-level-${level}`;
+    element.dataset.label = label;
     element.setAttribute("role", "img");
-    element.setAttribute("aria-label", `${priorityName} priority`);
+    element.setAttribute("aria-label", label);
 }
 
-function getSelectedCardPriority() {
-    const selectedPriority = cardPriorityInput.querySelector(
-        'input[name="cardPriority"]:checked'
-    );
-
-    return selectedPriority ? Number(selectedPriority.value) : null;
+function getSelectedCardLevel(fieldset) {
+    const selected = fieldset.querySelector('input[type="radio"]:checked');
+    return selected ? Number(selected.value) : null;
 }
 
-function setSelectedCardPriority(priority) {
-    const input = cardPriorityInput.querySelector(
-        `input[name="cardPriority"][value="${priority}"]`
-    );
+function setSelectedCardLevel(fieldset, level) {
+    const input = fieldset.querySelector(`input[type="radio"][value="${level}"]`);
 
     if (input) {
         input.checked = true;
     }
+}
 
+function getSelectedCardPriority() {
+    return getSelectedCardLevel(cardPriorityInput);
+}
+
+function getSelectedCardRisk() {
+    return getSelectedCardLevel(cardRiskInput);
+}
+
+function setSelectedCardPriority(priority) {
+    setSelectedCardLevel(cardPriorityInput, priority);
     updateCardPriorityIndicator();
+}
+
+function setSelectedCardRisk(risk) {
+    setSelectedCardLevel(cardRiskInput, risk);
+    updateCardRiskIndicator();
 }
 
 function updateCardPriorityIndicator() {
     const priority = getSelectedCardPriority();
 
     if (VALID_CARD_PRIORITIES.includes(priority)) {
-        setCardPriorityIndicator(cardPriorityIndicator, priority);
+        setCardLevelIndicator(cardPriorityIndicator, "priority", priority);
+    }
+}
+
+function updateCardRiskIndicator() {
+    const risk = getSelectedCardRisk();
+
+    if (VALID_CARD_RISKS.includes(risk)) {
+        setCardLevelIndicator(cardRiskIndicator, "risk", risk);
     }
 }
 
@@ -349,6 +376,7 @@ function openNewCardDialog(laneId) {
     cardTitleInput.value = "";
     cardTypeInput.value = CARD_TYPES.STORY;
     setSelectedCardPriority(CARD_PRIORITIES.MEDIUM);
+    setSelectedCardRisk(CARD_RISKS.MEDIUM);
     cardDescriptionInput.value = "";
 
     renderCardTags();
@@ -371,6 +399,7 @@ function openCardDialog(card) {
     cardTitleInput.value = card.title;
     cardTypeInput.value = card.type;
     setSelectedCardPriority(card.priority);
+    setSelectedCardRisk(card.risk);
     cardDescriptionInput.value = card.description;
 
     renderCardTags(card.tags);
@@ -390,21 +419,22 @@ function closeCardDialog() {
 
 function saveCard(event) {
     event.preventDefault();
+
     const title = cardTitleInput.value.trim();
     const type = cardTypeInput.value;
     const priority = getSelectedCardPriority();
+    const risk = getSelectedCardRisk();
     const description = cardDescriptionInput.value.trim();
     const tags = getSelectedCardTags();
 
-    if (!title || !VALID_CARD_PRIORITIES.includes(priority)) {
+    if (!title || !VALID_CARD_PRIORITIES.includes(priority) || !VALID_CARD_RISKS.includes(risk)) {
         return;
     }
 
     if (selectedCard) {
-        updateSelectedCard(title, description, type, priority, tags);
-    }
-    else {
-        createCard(title, description, type, priority, tags);
+        updateSelectedCard(title, description, type, priority, risk, tags);
+    } else {
+        createCard(title, description, type, priority, risk, tags);
     }
 
     saveProject();
@@ -412,15 +442,16 @@ function saveCard(event) {
     renderDashboard();
 }
 
-function updateSelectedCard(title, description, type, priority, tags) {
+function updateSelectedCard(title, description, type, priority, risk, tags) {
     selectedCard.title = title;
     selectedCard.type = type;
     selectedCard.priority = priority;
+    selectedCard.risk = risk;
     selectedCard.description = description;
     selectedCard.tags = tags;
 }
 
-function createCard(title, description, type, priority, tags) {
+function createCard(title, description, type, priority, risk, tags) {
     const card = {
         id: generateCardId(),
         title: title,
@@ -428,6 +459,7 @@ function createCard(title, description, type, priority, tags) {
         lane: selectedLaneId,
         type: type,
         priority: priority,
+        risk: risk,
         tags: tags,
         archived: false
     };
@@ -457,15 +489,15 @@ function archiveSelectedCard() {
     const title = cardTitleInput.value.trim();
     const type = cardTypeInput.value;
     const priority = getSelectedCardPriority();
+    const risk = getSelectedCardRisk();
     const description = cardDescriptionInput.value.trim();
     const tags = getSelectedCardTags();
 
-    if (!title || !VALID_CARD_PRIORITIES.includes(priority)) {
+    if (!title || !VALID_CARD_PRIORITIES.includes(priority) || !VALID_CARD_RISKS.includes(risk)) {
         return;
     }
 
-    updateSelectedCard(title, description, type, priority, tags);
-
+    updateSelectedCard(title, description, type, priority, risk, tags);
     selectedCard.archived = true;
 
     saveProject();

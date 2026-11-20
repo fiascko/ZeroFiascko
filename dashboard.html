@@ -83,6 +83,12 @@
                                 <option value="2">Medium</option>
                                 <option value="3">High</option>
                             </select>
+                            <select id="boardRiskFilter" aria-label="Filter board by risk">
+                                <option value="">All Risks</option>
+                                <option value="1">Low</option>
+                                <option value="2">Medium</option>
+                                <option value="3">High</option>
+                            </select>
                             <select id="boardTagFilter" aria-label="Filter board by tag">
                                 <option value="">All Tags</option>
                             </select>
@@ -136,6 +142,12 @@
                             </select>
                             <select id="archivePriorityFilter" aria-label="Filter archive by priority">
                                 <option value="">All Priorities</option>
+                                <option value="1">Low</option>
+                                <option value="2">Medium</option>
+                                <option value="3">High</option>
+                            </select>
+                            <select id="archiveRiskFilter" aria-label="Filter archive by risk">
+                                <option value="">All Risks</option>
                                 <option value="1">Low</option>
                                 <option value="2">Medium</option>
                                 <option value="3">High</option>
@@ -206,7 +218,8 @@
     <dialog id="cardDialog" class="dialog">
         <form id="cardForm" class="dialog-content">
             <div class="card-title-header">
-                <span id="cardPriorityIndicator" class="card-priority card-priority-2" aria-label="Medium priority"></span>
+                <span id="cardPriorityIndicator" class="card-indicator card-priority card-level-2" role="img" aria-label="Medium priority"></span>
+                <span id="cardRiskIndicator" class="card-indicator card-risk card-level-2" role="img" aria-label="Medium risk"></span>
                 <span id="cardNumber" hidden></span>
                 <label for="cardTitle">Title</label>
             </div>
@@ -229,6 +242,23 @@
                     </label>
                     <label class="card-priority-option card-priority-option-high">
                         <input type="radio" name="cardPriority" value="3">
+                        <span>High</span>
+                    </label>
+                </div>
+            </fieldset>
+            <fieldset id="cardRisk" class="card-priority-fieldset">
+                <legend>Risk</legend>
+                <div class="card-priority-options">
+                    <label class="card-priority-option card-priority-option-low">
+                        <input type="radio" name="cardRisk" value="1" required>
+                        <span>Low</span>
+                    </label>
+                    <label class="card-priority-option card-priority-option-medium">
+                        <input type="radio" name="cardRisk" value="2" checked>
+                        <span>Medium</span>
+                    </label>
+                    <label class="card-priority-option card-priority-option-high">
+                        <input type="radio" name="cardRisk" value="3">
                         <span>High</span>
                     </label>
                 </div>

@@ -133,7 +133,9 @@ function isValidCard(card) {
         typeof card.type === "string" &&
         VALID_CARD_TYPES.includes(card.type) &&
         typeof card.priority === "number" &&
-        VALID_CARD_PRIORITIES.includes(card.priority) &&
+        VALID_CARD_LEVELS.includes(card.priority) &&
+        typeof card.risk === "number" &&
+        VALID_CARD_LEVELS.includes(card.risk) &&
         Array.isArray(card.tags) &&
         card.tags.every((tagId) =>
             typeof tagId === "string" &&

@@ -62,9 +62,12 @@ function createArchivedCardElement(card, project) {
 
     const title = document.createElement("h3");
     const priority = createCardPriorityIndicator(card);
+    const risk = createCardRiskIndicator(card);
     const text = document.createElement("span");
     text.textContent = `#${card.id.slice(4)} ${card.title}`;
+
     title.appendChild(priority);
+    title.appendChild(risk);
     title.appendChild(text);
 
     const tags = createCardTags(card);

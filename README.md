@@ -35,20 +35,20 @@ ZeroFiascko does not require sending your project data to a remote server or thi
 - Kanban-style project board
 - Backlog, Analyse, In Progress, QA and Done lanes
 - Story and Bug card types
-- Low, Medium and High card priorities
-- Color-coded priority indicators
+- Low, Medium and High card priority and risk levels
+- Color-coded priority and risk indicators
 - Create, edit, move and delete cards
 - Automatic card numbering
 - Archive and unarchive cards
 - Create, rename and delete project tags
 - Assign multiple tags to cards
 - Search cards by title or number
-- Filter cards by type, priority and tag
+- Filter cards by type, priority, risk and tag
 - Independent Board and Archive filters
 - Live filtered card counts and clear filters
 - Project information and description
 - Project notes
-- Project statistics, including card priorities and completion tracking
+- Project statistics, including priority, risk and progress
 - Automatic local saving
 - JSON project files
 - Import and export projects

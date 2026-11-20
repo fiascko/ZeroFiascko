@@ -21,9 +21,9 @@
     --dashboard-min-width: 1400px;
     --border-radius: 12px;
     --transition: 0.2s ease;
-    --color-priority-low: #8DAF9C;
-    --color-priority-medium: #C59379;
-    --color-priority-high: #B85C5C;
+    --color-level-low: #8DAF9C;
+    --color-level-medium: #C59379;
+    --color-level-high: #B85C5C;
 }
 
 * {
@@ -358,7 +358,6 @@ input {
     background: var(--color-bg-card);
     border: 1px solid var(--color-border);
     border-radius: 8px;
-
     transition:
         transform var(--transition),
         border-color var(--transition),
@@ -456,8 +455,7 @@ input {
 .dialog-content textarea:focus {
     outline: none;
     border-color: var(--color-accent);
-    box-shadow:
-        0 0 0 2px var(--color-accent-soft);
+    box-shadow: 0 0 0 2px var(--color-accent-soft);
 }
 
 .dialog-content textarea::-webkit-scrollbar {
@@ -820,8 +818,7 @@ input {
 
 .archive-grid {
     display: grid;
-    grid-template-columns:
-        repeat(4, minmax(220px, 1fr));
+    grid-template-columns: repeat(4, minmax(220px, 1fr));
     gap: 16px;
 }
 
@@ -843,8 +840,7 @@ input {
 .archive-card:hover {
     transform: translateY(-2px);
     border-color: var(--color-accent);
-    box-shadow:
-        0 0 16px var(--color-accent-soft);
+    box-shadow: 0 0 16px var(--color-accent-soft);
 }
 
 .archive-card h3 {
@@ -1282,18 +1278,33 @@ input {
     min-width: 0;
 }
 
-.card-priority {
+.card-indicator {
     position: relative;
     display: inline-block;
     width: 10px;
     height: 10px;
     flex-shrink: 0;
     margin-top: 0.35em;
+}
+
+.card-priority::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--level-color);
     border-radius: 50%;
 }
 
-.card-priority::after {
-    content: attr(data-priority);
+.card-risk::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--level-color);
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.card-indicator::after {
+    content: attr(data-label);
     position: absolute;
     z-index: 10;
     bottom: calc(100% + 10px);
@@ -1313,25 +1324,32 @@ input {
     transform: translateX(-50%);
 }
 
-.card-priority:hover::after {
+.card-indicator:hover::after {
     opacity: 1;
     visibility: visible;
 }
 
-.card-title-header .card-priority {
+.card-title-header .card-indicator {
     margin-top: 0;
 }
 
-.card-priority-1 {
-    background: var(--color-priority-low);
+.card-title-header .card-indicator::after {
+    top: calc(100% + 10px);
+    bottom: auto;
+    left: 0;
+    transform: none;
 }
 
-.card-priority-2 {
-    background: var(--color-priority-medium);
+.card-level-1 {
+    --level-color: var(--color-level-low);
 }
 
-.card-priority-3 {
-    background: var(--color-priority-high);
+.card-level-2 {
+    --level-color: var(--color-level-medium);
+}
+
+.card-level-3 {
+    --level-color: var(--color-level-high);
 }
 
 .card-priority-fieldset {
@@ -1373,36 +1391,61 @@ input {
     flex-shrink: 0;
     margin: 0;
     padding: 0;
-    border: 2px solid var(--priority-color);
+    border: 2px solid var(--level-color);
     border-radius: 50%;
     background: transparent;
     cursor: pointer;
 }
 
 .card-priority-option input:checked {
-    background: var(--priority-color);
+    background: var(--level-color);
     box-shadow: inset 0 0 0 3px var(--color-bg-soft);
 }
 
+#cardRisk .card-priority-option input {
+    border: 0;
+    border-radius: 0;
+    background: var(--level-color);
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+#cardRisk .card-priority-option input:not(:checked) {
+    background: var(--level-color);
+    clip-path: polygon(
+        50% 0,
+        100% 100%,
+        0 100%,
+        50% 0,
+        50% 25%,
+        22% 85%,
+        78% 85%,
+        50% 25%
+    );
+}
+
+#cardRisk .card-priority-option input:checked {
+    box-shadow: none;
+}
+
 .dialog-content .card-priority-option:has(input:checked) {
-    border-color: var(--priority-color);
+    border-color: var(--level-color);
 }
 
 .dialog-content .card-priority-option:has(input:focus-visible) {
-    outline: 2px solid var(--priority-color);
+    outline: 2px solid var(--level-color);
     outline-offset: 3px;
 }
 
 .card-priority-option-low {
-    --priority-color: var(--color-priority-low);
+    --level-color: var(--color-level-low);
 }
 
 .card-priority-option-medium {
-    --priority-color: var(--color-priority-medium);
+    --level-color: var(--color-level-medium);
 }
 
 .card-priority-option-high {
-    --priority-color: var(--color-priority-high);
+    --level-color: var(--color-level-high);
 }
 
 .dialog-bug .dialog-content .card-priority-option {
@@ -1410,7 +1453,13 @@ input {
 }
 
 .dialog-bug .dialog-content .card-priority-option:has(input:checked) {
-    border-color: var(--priority-color);
+    border-color: var(--level-color);
+}
+
+.statistics-card-levels {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
 }
 
 .statistics-priorities {
@@ -1431,13 +1480,13 @@ input {
 }
 
 .statistic-priority-1 .statistic-value {
-    color: var(--color-priority-low);
+    color: var(--color-level-low);
 }
 
 .statistic-priority-2 .statistic-value {
-    color: var(--color-priority-medium);
+    color: var(--color-level-medium);
 }
 
 .statistic-priority-3 .statistic-value {
-    color: var(--color-priority-high);
+    color: var(--color-level-high);
 }

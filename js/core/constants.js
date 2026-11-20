@@ -1,7 +1,7 @@
 /* Copyright (c) Fiascko. All rights reserved. | Project: ZeroFiascko | File: constants.js */
 
 const PROJECT_FORMAT = "ZeroFiascko";
-const PROJECT_VERSION = 1.2;
+const PROJECT_VERSION = 1.3;
 const LOCAL_STORAGE_PROJECT_KEY = "ZeroFiasckoProject";
 
 const LANE_IDS = {
@@ -25,11 +25,14 @@ const CARD_TYPES = {
     BUG: "BUG"
 };
 
-const CARD_PRIORITIES = {
+const CARD_LEVELS = {
     LOW: 1,
     MEDIUM: 2,
     HIGH: 3
 };
+
+const CARD_PRIORITIES = CARD_LEVELS;
+const CARD_RISKS = CARD_LEVELS;
 
 const DEFAULT_TAG_NAMES = [
     "Design",
@@ -42,5 +45,7 @@ const DEFAULT_TAG_NAMES = [
 ];
 
 const VALID_CARD_TYPES = Object.values(CARD_TYPES);
-const VALID_CARD_PRIORITIES = Object.values(CARD_PRIORITIES);
+const VALID_CARD_LEVELS = Object.values(CARD_LEVELS);
+const VALID_CARD_PRIORITIES = VALID_CARD_LEVELS;
+const VALID_CARD_RISKS = VALID_CARD_LEVELS;
 const VALID_LANE_IDS = Object.values(LANE_IDS);

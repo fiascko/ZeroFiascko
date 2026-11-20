@@ -5,6 +5,7 @@ const cardFilters = {
         search: document.getElementById("boardSearch"),
         type: document.getElementById("boardTypeFilter"),
         priority: document.getElementById("boardPriorityFilter"),
+        risk: document.getElementById("boardRiskFilter"),
         tag: document.getElementById("boardTagFilter"),
         clear: document.getElementById("boardClearFilters"),
         count: document.getElementById("boardFilterCount")
@@ -13,6 +14,7 @@ const cardFilters = {
         search: document.getElementById("archiveSearch"),
         type: document.getElementById("archiveTypeFilter"),
         priority: document.getElementById("archivePriorityFilter"),
+        risk: document.getElementById("archiveRiskFilter"),
         tag: document.getElementById("archiveTagFilter"),
         clear: document.getElementById("archiveClearFilters"),
         count: document.getElementById("archiveFilterCount")
@@ -28,16 +30,14 @@ function initializeCardFilters() {
 function initializeCardFilter(section, render) {
     const filters = cardFilters[section];
 
-    filters.search.addEventListener("input", render);
-    filters.type.addEventListener("change", render);
-    filters.priority.addEventListener("change", render);
-    filters.tag.addEventListener("change", render);
+    [filters.search, filters.type, filters.priority, filters.risk, filters.tag].forEach((filter) => {
+        filter.addEventListener(filter === filters.search ? "input" : "change", render);
+    });
 
     filters.clear.addEventListener("click", () => {
-        filters.search.value = "";
-        filters.type.value = "";
-        filters.priority.value = "";
-        filters.tag.value = "";
+        [filters.search, filters.type, filters.priority, filters.risk, filters.tag].forEach((filter) => {
+            filter.value = "";
+        });
 
         render();
     });
@@ -75,16 +75,19 @@ function filterCards(cards, section) {
     const search = filters.search.value.trim().toLowerCase();
     const type = filters.type.value;
     const priority = filters.priority.value;
+    const risk = filters.risk.value;
     const tag = filters.tag.value;
 
     return cards.filter((card) => {
         const searchableText = `#${card.id.slice(4)} ${card.title}`.toLowerCase();
-        const matchesSearch = searchableText.includes(search);
-        const matchesType = !type || card.type === type;
-        const matchesPriority = !priority || card.priority === Number(priority);
-        const matchesTag = !tag || card.tags.includes(tag);
 
-        return matchesSearch && matchesType && matchesPriority && matchesTag;
+        return (
+            searchableText.includes(search) &&
+            (!type || card.type === type) &&
+            (!priority || card.priority === Number(priority)) &&
+            (!risk || card.risk === Number(risk)) &&
+            (!tag || card.tags.includes(tag))
+        );
     });
 }
 

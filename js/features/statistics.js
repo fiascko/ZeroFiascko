@@ -4,6 +4,7 @@ const statistics = document.getElementById("statistics");
 
 function renderStatistics(project) {
     statistics.replaceChildren();
+
     const activeCards = getActiveCards(project);
     const allCards = project.cards;
     const archivedCardsCount = getArchivedCardsCount(project);
@@ -50,7 +51,18 @@ function renderStatistics(project) {
     statistics.appendChild(summary);
     statistics.appendChild(progressSection);
     statistics.appendChild(lanesSection);
-    statistics.appendChild(createPriorityStatistics(activeCards));
+    const cardLevels = document.createElement("div");
+    cardLevels.className = "statistics-card-levels";
+
+    cardLevels.appendChild(
+        createCardLevelStatistics(activeCards, "priority", "Priority")
+    );
+
+    cardLevels.appendChild(
+        createCardLevelStatistics(activeCards, "risk", "Risk")
+    );
+
+    statistics.appendChild(cardLevels);
 }
 
 function getActiveCards(project) {
@@ -223,38 +235,36 @@ function createLaneStatistic(lane, activeCards) {
     return item;
 }
 
-function createPriorityStatistics(activeCards) {
+function createCardLevelStatistics(activeCards, property, label) {
     const section = document.createElement("div");
     section.className = "statistics-priorities";
 
     const title = document.createElement("h3");
-    title.textContent = "Cards by Priority";
+    title.textContent = `Cards by ${label}`;
 
-    const priorities = document.createElement("div");
-    priorities.className = "statistics-priority-list";
+    const levels = document.createElement("div");
+    levels.className = "statistics-priority-list";
 
-    const priorityLevels = [
-        { value: CARD_PRIORITIES.LOW, name: "Low" },
-        { value: CARD_PRIORITIES.MEDIUM, name: "Medium" },
-        { value: CARD_PRIORITIES.HIGH, name: "High" }
-    ];
-
-    priorityLevels.forEach((priority) => {
+    Object.entries(CARD_LEVELS).forEach(([name, value]) => {
         const count = activeCards.filter(
-            (card) => card.priority === priority.value
+            (card) => card[property] === value
         ).length;
 
-        const card = createStatisticCard(priority.name, count);
-        card.classList.add(
-            "statistic-priority",
-            `statistic-priority-${priority.value}`
+        const card = createStatisticCard(
+            name.charAt(0) + name.slice(1).toLowerCase(),
+            count
         );
 
-        priorities.appendChild(card);
+        card.classList.add(
+            "statistic-priority",
+            `statistic-priority-${value}`
+        );
+
+        levels.appendChild(card);
     });
 
     section.appendChild(title);
-    section.appendChild(priorities);
+    section.appendChild(levels);
 
     return section;
 }
