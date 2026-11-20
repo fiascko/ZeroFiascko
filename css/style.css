@@ -1363,6 +1363,10 @@ input {
     font-weight: 600;
 }
 
+.dialog-bug .card-priority-fieldset legend {
+    color: var(--color-bug-hover);
+}
+
 .card-priority-options {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1395,6 +1399,11 @@ input {
     border-radius: 50%;
     background: transparent;
     cursor: pointer;
+}
+
+.dialog-content .card-priority-option span,
+.dialog-bug .dialog-content .card-priority-option span {
+    color: var(--color-white);
 }
 
 .card-priority-option input:checked {
