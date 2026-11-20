@@ -39,6 +39,7 @@ ZeroFiascko does not require sending your project data to a remote server or thi
 - Color-coded priority and risk indicators
 - Create, edit, move and delete cards
 - Automatic card numbering
+- Automatic card sorting by priority and number
 - Archive and unarchive cards
 - Create, rename and delete project tags
 - Assign multiple tags to cards

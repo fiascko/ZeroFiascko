@@ -42,6 +42,18 @@ function generateCardId() {
     return `Card${highestId + 1}`;
 }
 
+function sortCardsByPriority(cards) {
+    return [...cards].sort((first, second) => {
+        const priorityDifference = second.priority - first.priority;
+
+        if (priorityDifference !== 0) {
+            return priorityDifference;
+        }
+
+        return Number(first.id.slice(4)) - Number(second.id.slice(4));
+    });
+}
+
 function initializeFooter() {
     const currentYear = document.getElementById("currentYear");
     const currentVersion = document.getElementById("currentVersion");

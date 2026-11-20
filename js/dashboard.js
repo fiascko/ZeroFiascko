@@ -83,8 +83,10 @@ function createLaneElement(lane, filteredCards) {
     laneElement.className = "board-lane";
     laneElement.id = lane.id;
 
-    const cards = filteredCards.filter(
-        (card) => card.lane === lane.id
+    const cards = sortCardsByPriority(
+        filteredCards.filter(
+            (card) => card.lane === lane.id
+        )
     );
 
     const header = createLaneHeader(lane, cards.length);

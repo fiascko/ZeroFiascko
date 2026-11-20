@@ -9,7 +9,9 @@ function renderArchive(project) {
         (card) => card.archived
     );
 
-    const filteredCards = filterCards(archivedCards, "archive");
+    const filteredCards = sortCardsByPriority(
+        filterCards(archivedCards, "archive")
+    );
 
     updateCardFilterCount(
         "archive",
